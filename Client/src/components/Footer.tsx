@@ -86,7 +86,7 @@ const Footer = () => {
             <div className="flex items-center space-x-2">
               <Heart className="w-6 h-6 text-blue-500" />
               <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
-                HealthTech
+                medify.me
               </h3>
             </div>
             <p className="text-gray-400 leading-relaxed">

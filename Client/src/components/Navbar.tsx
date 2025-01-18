@@ -38,8 +38,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed z-50 w-full bg-white-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-50">
-        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="fixed z-50 w-full bg-white-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-50 ">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-1">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <motion.div
