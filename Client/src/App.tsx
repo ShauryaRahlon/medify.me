@@ -1,19 +1,17 @@
-import { useState } from 'react'
-import './App.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Review from './Pages/Review'
+import { useState } from "react";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Review from "./Pages/Review";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <Router>
         <Routes>
-          <Route path='/chat' element={<Review/>}/>
+          <Route path="/review" element={<Review />} />
         </Routes>
       </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
