@@ -33,7 +33,7 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
-  const menuItems = ['Home', 'Features', 'About', 'Contact'];
+  const menuItems = ['Home', 'Features', 'About', 'Contact','Sign In'];
 
   const menuVariants = {
     hidden: { opacity: 0, y: -5 },
@@ -86,23 +86,13 @@ const Navbar = () => {
                     scale: 1.05,
                     textShadow: "0 0 8px rgb(255,255,255)",
                   }}
-                  className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium cursor-pointer relative group"
+                  className="text-gray-300 hover:text-white px-3 py-2 text-lg font-medium cursor-pointer relative group"
                 >
                   {item}
                   <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-teal-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 </motion.a>
               ))}
-              <motion.button
-                onClick={handleAuthClick}
-                whileHover={{ scale: 1.05 }}
-                className="px-6 py-2.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 text-white rounded-full 
-                          hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 transform relative overflow-hidden
-                          before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent
-                          before:translate-x-[-200%] before:transition-transform before:duration-700
-                          hover:before:translate-x-[200%]"
-              >
-                Sign In
-              </motion.button>
+            
             </div>
 
             {/* Mobile Menu Button */}
