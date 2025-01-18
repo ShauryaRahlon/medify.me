@@ -1,4 +1,36 @@
-import React, { useState } from "react";
+// types.ts
+interface GenerativeContent {
+  parts: {
+    text?: string;
+    inlineData?: {
+      mimeType: string;
+      data: string;
+    };
+  }[];
+}
+
+interface GenerateContentRequest {
+  contents: GenerativeContent[];
+  generationConfig?: {
+    temperature?: number;
+    topK?: number;
+    topP?: number;
+    maxOutputTokens?: number;
+  };
+}
+
+interface GenerateContentResponse {
+  candidates: {
+    content: {
+      parts: {
+        text: string;
+      }[];
+    };
+  }[];
+}
+
+// Review.tsx
+import { useState } from "react";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import ReactMarkdown from "react-markdown";
@@ -6,12 +38,12 @@ import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
 function Review() {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [caption, setCaption] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const onDrop = (acceptedFiles) => {
+  const onDrop = (acceptedFiles: File[]) => {
     setFile(acceptedFiles[0]);
     setCaption("");
     setError("");
@@ -23,49 +55,92 @@ function Review() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("image", file);
-
     setLoading(true);
     setError("");
+
     try {
-      const response = await axios.post(
-        "http://localhost:7000/previewer",
-        formData,
+      const API_KEY = import.meta.env.VITE_API_KEY;
+
+      // Convert image to base64
+      const base64Image = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64 = reader.result as string;
+          resolve(base64.split(",")[1]);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      const requestBody: GenerateContentRequest = {
+        contents: [
+          {
+            parts: [
+              {
+                inlineData: {
+                  mimeType: file.type,
+                  data: base64Image,
+                },
+              },
+              {
+                text: "Medically Summarize this image",
+              },
+            ],
+          },
+        ],
+        generationConfig: {
+          temperature: 0.4,
+          topK: 32,
+          topP: 1,
+          maxOutputTokens: 2048,
+        },
+      };
+
+      const response = await axios.post<GenerateContentResponse>(
+        `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=${API_KEY}`,
+        requestBody,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
-      setTimeout(() => {
-        setCaption(response.data.caption);
-      }, 500);
-    } catch (err) {
-      setError("Error generating review. Please try again.");
+
+      if (response.data.candidates && response.data.candidates[0]) {
+        const generatedText = response.data.candidates[0].content.parts[0].text;
+        setCaption(generatedText);
+      } else {
+        throw new Error("No response generated");
+      }
+    } catch (err: any) {
+      setError(
+        err.response?.data?.error?.message ||
+          "Error generating review. Please try again."
+      );
+      console.error("API Error:", err.response?.data || err);
     } finally {
       setLoading(false);
     }
   };
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
+    },
+    maxSize: 5 * 1024 * 1024, // 5MB
+  });
 
   return (
     <div className="min-h-screen relative bg-black">
-      {/* Grid background overlay - increased brightness from 12 to 20 */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-[size:14px_24px]" />
-
-      {/* Radial gradient overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#000000,transparent)]" />
-
       <div className="relative z-10">
         <div className="container mx-auto px-4 py-8">
-          {/* Navigation */}
           <nav className="mb-8">
             <Link to="/" className="inline-block">
               <img src="/vite.svg" alt="Logo" className="h-12 w-auto" />
             </Link>
           </nav>
-
-          {/* Main Content */}
           <div className="max-w-2xl mx-auto">
             <header className="text-center mb-12 flex flex-col justify-center items-center">
               <h1 className="text-4xl font-bold text-white inline-block">
@@ -105,19 +180,17 @@ function Review() {
               </button>
             </div>
 
-            {/* Results */}
             {caption && (
               <div className="mt-8 p-6 bg-neutral-900/50 rounded-xl border border-neutral-800 backdrop-blur-sm result-container">
                 <h3 className="text-xl font-medium mb-4 text-white text-center">
                   Result:
                 </h3>
-                <div className="prose prose-invert max-w-none text-white ">
+                <div className="prose prose-invert max-w-none text-white">
                   <ReactMarkdown>{caption}</ReactMarkdown>
                 </div>
               </div>
             )}
 
-            {/* Error Message */}
             {error && (
               <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-200 text-center">
                 {error}
