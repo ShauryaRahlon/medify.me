@@ -12,28 +12,28 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
       {/* Backdrop overlay */}
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal container */}
-      <div className="w-[800px] bg-navy-900 rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.3)] overflow-hidden relative z-10 animate-[fadeIn_0.3s_ease-out]">
-        <div className="flex flex-col md:flex-row h-[600px]">
+      <div className="w-full max-w-4xl bg-navy-900 rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.3)] overflow-hidden relative z-10 animate-[fadeIn_0.3s_ease-out]">
+        <div className="flex flex-col md:flex-row md:h-[600px]">
           {/* Left side - Image/Brand section */}
-          <div className="bg-[#1a2942] p-8 flex flex-col justify-center items-center md:w-1/2">
-            <div className="bg-blue-500/10 p-6 rounded-full mb-4">
-              <Stethoscope className="w-16 h-16 text-blue-400" />
+          <div className="bg-[#1a2942] p-6 md:p-8 flex flex-col justify-center items-center md:w-1/2">
+            <div className="bg-blue-500/10 p-4 md:p-6 rounded-full mb-4">
+              <img src='/icons.webp' className="w-12 h-12 md:w-16 md:h-16 text-blue-400" />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-4">medify.me</h1>
-            <p className="text-blue-200 text-center">
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">medify.me</h1>
+            <p className="text-blue-200 text-center text-sm md:text-base">
               Your trusted healthcare companion. Connect with doctors and manage your health journey seamlessly.
             </p>
           </div>
 
           {/* Right side - Content section */}
-          <div className="bg-[#0f172a] p-8 flex flex-col justify-center md:w-1/2">
-            <div className="space-y-6">
-              <h2 className="text-2xl font-semibold text-white text-center mb-8">
+          <div className="bg-[#0f172a] p-6 md:p-8 flex flex-col justify-center md:w-1/2">
+            <div className="space-y-4 md:space-y-6">
+              <h2 className="text-xl md:text-2xl font-semibold text-white text-center mb-6 md:mb-8">
                 Sign In
               </h2>
 
@@ -74,7 +74,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/20"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 md:py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/20"
                 >
                   Sign In
                 </button>
@@ -90,7 +90,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </a>
               </div>
 
-              <p className="text-sm text-gray-400 text-center mt-6">
+              <p className="text-xs md:text-sm text-gray-400 text-center mt-4 md:mt-6">
                 By signing in, you agree to our Terms of Service and Privacy Policy
               </p>
             </div>
