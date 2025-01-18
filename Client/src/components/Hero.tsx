@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Activity } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Activity } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -22,21 +22,21 @@ const Hero = () => {
             The Future of Health Technology
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-12">
-            Experience the next generation of health monitoring and diagnosis with our AI-powered platform
+            Experience the next generation of health monitoring and diagnosis
+            with our AI-powered platform
           </p>
-          
+
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="inline-block"
           >
             <a className="bg-gradient-to-r from-blue-500 to-green-400 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 relative overflow-hidden group">
-              <span className="relative z-10">Get Started</span>
+              <span className="relative z-10 cursor-pointer">Get Started</span>
               <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-500 opacity-0 group-hover:opacity-3 transition-opacity duration-300" />
             </a>
           </motion.div>
         </motion.div>
-
 
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -47,14 +47,14 @@ const Hero = () => {
           <div className="relative mx-auto w-full max-w-lg perspective-1000">
             <motion.div
               initial={{ rotateY: 25 }}
-              animate={{ 
+              animate={{
                 rotateY: [-25, 25, -25],
-                y: [-20, 20, -20]
+                y: [-20, 20, -20],
               }}
               transition={{
                 duration: 8,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
               className="relative w-72 h-[600px] mx-auto"
             >
@@ -69,7 +69,7 @@ const Hero = () => {
                       <Activity className="w-4 h-4 text-green-400 animate-pulse" />
                     </div>
                   </div>
-                  
+
                   {/* Health Data */}
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -78,8 +78,10 @@ const Hero = () => {
                     className="p-4 space-y-4"
                   >
                     <div className="bg-gray-800/50 p-4 rounded-xl">
-                      <h3 className="text-green-400 text-sm font-medium">Heart Rate</h3>
-                      <motion.p 
+                      <h3 className="text-green-400 text-sm font-medium">
+                        Heart Rate
+                      </h3>
+                      <motion.p
                         className="text-2xl font-bold text-white"
                         animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 1, repeat: Infinity }}
@@ -87,9 +89,11 @@ const Hero = () => {
                         72 BPM
                       </motion.p>
                     </div>
-                    
+
                     <div className="bg-gray-800/50 p-4 rounded-xl">
-                      <h3 className="text-blue-400 text-sm font-medium">Steps Today</h3>
+                      <h3 className="text-blue-400 text-sm font-medium">
+                        Steps Today
+                      </h3>
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: "75%" }}
@@ -98,38 +102,42 @@ const Hero = () => {
                       />
                       <p className="text-xl font-bold text-white mt-2">7,543</p>
                     </div>
-                    
+
                     <div className="bg-gray-800/50 p-4 rounded-xl">
-                      <h3 className="text-purple-400 text-sm font-medium">Sleep Quality</h3>
+                      <h3 className="text-purple-400 text-sm font-medium">
+                        Sleep Quality
+                      </h3>
                       <div className="flex justify-between items-center mt-2">
                         <motion.div
-                          animate={{ 
+                          animate={{
                             height: ["100%", "60%", "100%"],
                           }}
                           transition={{ duration: 2, repeat: Infinity }}
                           className="w-2 h-12 bg-purple-400 rounded-full"
                         />
                         <motion.div
-                          animate={{ 
+                          animate={{
                             height: ["60%", "100%", "60%"],
                           }}
                           transition={{ duration: 2, repeat: Infinity }}
                           className="w-2 h-8 bg-purple-400 rounded-full"
                         />
                         <motion.div
-                          animate={{ 
+                          animate={{
                             height: ["80%", "40%", "80%"],
                           }}
                           transition={{ duration: 2, repeat: Infinity }}
                           className="w-2 h-10 bg-purple-400 rounded-full"
                         />
                       </div>
-                      <p className="text-xl font-bold text-white mt-2">8h 12m</p>
+                      <p className="text-xl font-bold text-white mt-2">
+                        8h 12m
+                      </p>
                     </div>
                   </motion.div>
                 </div>
               </div>
-              
+
               {/* Reflections */}
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-[3rem] pointer-events-none" />
             </motion.div>

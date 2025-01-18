@@ -17,7 +17,7 @@ function generateOTP() {
 }
 
 // Signup Controller
-export const signup = async (req, res) => {
+export const signup = async(req, res) => {
     try {
         const { userName, email, password } = req.body;
 
@@ -93,7 +93,7 @@ export const signup = async (req, res) => {
         console.error("Error in signup:", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
-};
+}
 
 // OTP Verification Controller
 export const verifyOTP = async (req, res) => {

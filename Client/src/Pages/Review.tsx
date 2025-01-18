@@ -29,9 +29,13 @@ function Review() {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.post("url", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await axios.post(
+        "http://localhost:7000/previewer",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       setTimeout(() => {
         setCaption(response.data.caption);
       }, 500);
@@ -45,9 +49,12 @@ function Review() {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-b from-neutral-950 via-neutral-900 to-black">
-      {/* Smooth animated gradient overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000000,#ffffff08,#00000000)] animate-[gradient_3s_ease-in-out_infinite] bg-[length:200%_100%]" />
+    <div className="min-h-screen relative bg-black">
+      {/* Grid background overlay - increased brightness from 12 to 20 */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-[size:14px_24px]" />
+
+      {/* Radial gradient overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#000000,transparent)]" />
 
       <div className="relative z-10">
         <div className="container mx-auto px-4 py-8">
@@ -61,14 +68,14 @@ function Review() {
           {/* Main Content */}
           <div className="max-w-2xl mx-auto">
             <header className="text-center mb-12 flex flex-col justify-center items-center">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-gray-300 bg-clip-text text-transparent inline-block">
+              <h1 className="text-4xl font-bold text-white inline-block">
                 Review Buddy
               </h1>
             </header>
 
             <div
               {...getRootProps()}
-              className="border-2 border-dashed border-neutral-800 rounded-xl p-12 text-center  cursor-pointer transition-all duration-300 hover:border-neutral-700 hover:bg-white/5 bg-black/20 shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 active:translate-y-2"
+              className="border-2 border-dashed border-neutral-800 rounded-xl p-12 text-center cursor-pointer transition-all duration-300 hover:border-neutral-700 hover:bg-white/5 bg-black/20 backdrop-blur-sm shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 active:translate-y-2"
             >
               <input {...getInputProps()} />
               <p className="text-neutral-400">
@@ -100,11 +107,11 @@ function Review() {
 
             {/* Results */}
             {caption && (
-              <div className="mt-8 p-6 bg-neutral-900/50 rounded-xl border border-neutral-800">
+              <div className="mt-8 p-6 bg-neutral-900/50 rounded-xl border border-neutral-800 backdrop-blur-sm result-container">
                 <h3 className="text-xl font-medium mb-4 text-white text-center">
                   Result:
                 </h3>
-                <div className="prose prose-invert max-w-none">
+                <div className="prose prose-invert max-w-none text-white ">
                   <ReactMarkdown>{caption}</ReactMarkdown>
                 </div>
               </div>
