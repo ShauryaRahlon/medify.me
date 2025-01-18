@@ -66,7 +66,7 @@ const Features = () => {
                 scale: 1.05,
                 boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)"
               }}
-              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-6 border border-white/10 group hover:border-blue-500/50 transition-all duration-300"
+              className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-6 border border-white/10 group hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
             >
               <motion.div
                 whileHover={{ rotate: 360 }}

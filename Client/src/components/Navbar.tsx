@@ -6,15 +6,16 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed w-full z-50 bg-black/50 backdrop-blur-xl border-b border-white/10">
+    // <nav className="fixed w-full z-50 bg-black/50 backdrop-blur-xl border-b border-white/10">
+    <nav className="fixed  w-full h-6/7 bg-gray-800 bg-black/50 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-20  border-white/10 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex-shrink-0 text-xl font-bold bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent"
+            className="flex-shrink-0 text-2xl font-bold bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent"
           >
-            HealthTech
+            Medify.me
           </motion.div>
 
           <div className="hidden md:block">
@@ -23,7 +24,7 @@ const Navbar = () => {
                 <motion.a
                   key={item}
                   whileHover={{ scale: 1.05 }}
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-m font-bold cursor-pointer"
                 >
                   {item}
                 </motion.a>
