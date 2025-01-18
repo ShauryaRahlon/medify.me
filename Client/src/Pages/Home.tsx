@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Features from "../components/Features";
 import Footer from "../components/Footer";
+import Testimonials from "../components/Testimonials";
 function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white overflow-hidden">
@@ -13,7 +14,9 @@ function Home() {
       <Navbar />
       <Hero />
       <Features />
+      <Testimonials/>
       <Footer />
+
     </div>
   </div>
   )
