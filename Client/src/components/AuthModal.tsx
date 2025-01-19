@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -8,7 +9,14 @@ interface AuthModalProps {
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Your sign-in logic here (authentication, validation, etc.)
+    
+    // On successful sign-in, navigate to the user home page
+    navigate("/userhome"); // Redirect to user home page
+  };
   if (!isOpen) return null;
 
   return (
@@ -40,7 +48,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <h2 className="text-xl md:text-2xl font-semibold text-white text-center mb-6 md:mb-8">
                 Sign In
               </h2>
-              <form className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label
                     htmlFor="email"
