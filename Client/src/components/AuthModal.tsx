@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { auth, googleProvider, signInWithPopup } from "../firebaseConfig";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -8,8 +9,25 @@ interface AuthModalProps {
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!isOpen) return null;
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      console.log("Google sign-in successful:", user);
+      // Handle the user object as needed, e.g., save in a global state or database
+      onClose(); // Close the modal on successful login
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+      alert("Google sign-in failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
@@ -40,6 +58,27 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <h2 className="text-xl md:text-2xl font-semibold text-white text-center mb-6 md:mb-8">
                 Sign In
               </h2>
+
+              {/* Google Sign-In Button */}
+              <button
+                onClick={handleGoogleSignIn}
+                disabled={isLoading}
+                className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-900 font-medium py-2.5 md:py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg"
+              >
+                <img
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  alt="Google"
+                  className="w-5 h-5"
+                />
+                {isLoading ? "Signing in..." : "Continue with Google"}
+              </button>
+
+              <div className="relative flex items-center gap-3 py-2">
+                <div className="flex-grow border-t border-gray-700"></div>
+                <span className="text-sm text-gray-400">or</span>
+                <div className="flex-grow border-t border-gray-700"></div>
+              </div>
+
               <form className="space-y-4">
                 <div>
                   <label
