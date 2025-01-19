@@ -144,6 +144,10 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: "Invalid email or password." });
         }
 
+        if (checkUser.isVerified !== true) {
+            return res.status(401).json({ message: "User is not verified. Verify the user first." })
+        }
+
         const token = jwt.sign({ _id: checkUser._id }, process.env.MY_SECRET, { expiresIn: "1h" });
 
         return res.status(200).json({ message: "Login successful!", token });
