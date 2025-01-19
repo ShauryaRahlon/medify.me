@@ -9,6 +9,7 @@ import DoctorAuthModal from './components/DoctorAuthModal';
 import DocHomePage from './components/DocHomePage';
 import UserHome from './Pages/UserHome';
 import OtpVerification from "./components/Otpverify";
+import MedicalHistory from "./components/MedicalHistory";
 function App() {
   return (
     <Router>
@@ -23,6 +24,7 @@ function App() {
         <Route path="/Dochome" element={<DocHomePage />} />
         <Route path="/userhome" element={<UserHome />} />
         <Route path="/verifyOTP" element={<OtpVerification/>} />
+        <Route path="/medical-history" element={<MedicalHistory/>} />
       </Routes>
     </Router>
   );

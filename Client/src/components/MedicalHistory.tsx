@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ClipboardList, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
-
+import { useNavigate,Link } from 'react-router-dom';
 type FormData = {
   allergies: string;
   medications: string;
@@ -127,7 +127,7 @@ export default function MedicalHistory() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+    // navigate(path);
   };
 
   return (
@@ -473,12 +473,14 @@ export default function MedicalHistory() {
             ))}
 
             <div className="p-6 md:p-8">
+            <Link to="/userhome">
               <button
                 type="submit"
                 className="w-full md:w-auto bg-blue-500 text-white px-8 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-800 transition-colors"
               >
                 Submit Medical History
               </button>
+            </Link>
             </div>
           </form>
         </div>

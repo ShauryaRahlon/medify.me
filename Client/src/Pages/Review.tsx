@@ -32,9 +32,10 @@ interface GenerateContentResponse {
 // Review.tsx
 import { useState } from "react";
 import axios from "axios";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useDropzone } from "react-dropzone";
 import ReactMarkdown from "react-markdown";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { Chatbot } from '../components/Chatbot';
 
@@ -43,7 +44,7 @@ function Review() {
   const [caption, setCaption] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   const onDrop = (acceptedFiles: File[]) => {
     setFile(acceptedFiles[0]);
     setCaption("");
@@ -131,17 +132,28 @@ function Review() {
     maxSize: 5 * 1024 * 1024, // 5MB
   });
 
+  const handleUserSwitch=()=>{
+    navigate('/userhome')
+  }
+
   return (
     <div className="min-h-screen relative bg-black">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-[size:14px_24px]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#000000,transparent)]" />
       <div className="relative z-10">
         <div className="container mx-auto px-4 py-8">
-          <nav className="mb-8">
-            <Link to="/" className="inline-block">
-              <img src="/vite.svg" alt="Logo" className="h-12 w-auto" />
-            </Link>
-          </nav>
+        <nav className=" p-1 mb-1">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="ml-2 flex items-center gap-3"
+      >
+            <div className="relative flex gap-4" onClick={handleUserSwitch} >
+              <img src="/icons.webp" alt="logo" className="w-12 h-12" />
+            <span className="text-3xl font-bold text-cyan-400"><button>medify.me</button></span>
+            </div>
+      </motion.div>
+        </nav>
           <div className="max-w-2xl mx-auto">
             <header className="text-center mb-12 flex flex-col justify-center items-center">
               <h1 className="text-4xl font-bold text-white inline-block">
