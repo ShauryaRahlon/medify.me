@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Stethoscope, Eye, EyeOff } from 'lucide-react';
+import {  Eye, EyeOff } from 'lucide-react';
+
 
 interface AuthModalProps {
   isOpen: boolean;
