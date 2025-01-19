@@ -1,13 +1,13 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Heart, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Facebook, 
-  Twitter, 
-  Instagram, 
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Heart,
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
   Linkedin,
   ArrowRight,
   MessageCircle,
@@ -17,36 +17,52 @@ import {
   Newspaper,
   Building2,
   Contact,
-  HelpCircle
-} from 'lucide-react';
+  HelpCircle,
+} from "lucide-react";
 
 const Footer = () => {
   const companyLinks = [
-    { name: 'About Us', icon: <Building2 size={16} /> },
-    { name: 'Blog', icon: <Newspaper size={16} /> },
-    { name: 'Careers', icon: <Users size={16} /> },
-    { name: 'Contact', icon: <Contact size={16} /> }
+    { name: "About Us", icon: <Building2 size={16} /> },
+    { name: "Blog", icon: <Newspaper size={16} /> },
+    { name: "Careers", icon: <Users size={16} /> },
+    { name: "Contact", icon: <Contact size={16} /> },
   ];
 
   const featuresLinks = [
-    { name: 'Health Monitoring', icon: <Heart size={16} /> },
-    { name: 'Consultations', icon: <MessageCircle size={16} /> },
-    { name: 'Resources', icon: <BookOpen size={16} /> },
-    { name: 'Support', icon: <LifeBuoy size={16} /> }
+    { name: "Health Monitoring", icon: <Heart size={16} /> },
+    { name: "Consultations", icon: <MessageCircle size={16} /> },
+    { name: "Resources", icon: <BookOpen size={16} /> },
+    { name: "Support", icon: <LifeBuoy size={16} /> },
   ];
 
   const contactInfo = [
-    { icon: <Mail size={16} />, text: 'contact@healthtech.com' },
-    { icon: <Phone size={16} />, text: '+1 (555) 123-4567' },
-    { icon: <MapPin size={16} />, text: 'San Francisco, CA' },
-    { icon: <HelpCircle size={16} />, text: '24/7 Support' }
+    { icon: <Mail size={16} />, text: "contact@healthtech.com" },
+    { icon: <Phone size={16} />, text: "+1 (555) 123-4567" },
+    { icon: <MapPin size={16} />, text: "San Francisco, CA" },
+    { icon: <HelpCircle size={16} />, text: "24/7 Support" },
   ];
 
   const socialIcons = [
-    { icon: <Facebook size={20} />, name: 'Facebook' },
-    { icon: <Twitter size={20} />, name: 'Twitter' },
-    { icon: <Instagram size={20} />, name: 'Instagram' },
-    { icon: <Linkedin size={20} />, name: 'LinkedIn' }
+    {
+      icon: <Facebook size={20} />,
+      name: "Facebook",
+      link: "https://www.facebook.com",
+    },
+    {
+      icon: <Twitter size={20} />,
+      name: "Twitter",
+      link: "https://www.twitter.com",
+    },
+    {
+      icon: <Instagram size={20} />,
+      name: "Instagram",
+      link: "https://www.instagram.com/sh4urya.r/",
+    },
+    {
+      icon: <Linkedin size={20} />,
+      name: "LinkedIn",
+      link: "https://www.linkedin.com/in/shaurya-rahlon/",
+    },
   ];
 
   const containerVariants = {
@@ -55,26 +71,26 @@ const Footer = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
+        delayChildren: 0.3,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
-      opacity: 1
-    }
+      opacity: 1,
+    },
   };
 
   return (
     <footer className="relative bg-gradient-to-b from-gray-900 to-black border-t border-white/10">
       {/* Animated gradient line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent animate-gradient-x"></div>
-      
+
       <div className="max-w-7xl mx-auto pt-16 pb-8 px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -90,12 +106,16 @@ const Footer = () => {
               </h3>
             </div>
             <p className="text-gray-400 leading-relaxed">
-              Revolutionizing healthcare through innovative technology solutions. Monitoring your health has never been easier.
+              Revolutionizing healthcare through innovative technology
+              solutions. Monitoring your health has never been easier.
             </p>
             <div className="flex space-x-4">
-              {socialIcons.map((social, index) => (
+              {socialIcons.map((social) => (
                 <motion.a
                   key={social.name}
+                  href={social.link} // Add the link here
+                  target="_blank" // Open in a new tab
+                  rel="noopener noreferrer" // Secure the link
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors cursor-pointer"
@@ -111,7 +131,8 @@ const Footer = () => {
             <h4 className="text-lg font-semibold text-white">Company</h4>
             <ul className="space-y-4">
               {companyLinks.map((link) => (
-                <motion.li key={link.name}
+                <motion.li
+                  key={link.name}
                   whileHover={{ x: 5 }}
                   className="flex items-center space-x-2 group"
                 >
@@ -131,7 +152,8 @@ const Footer = () => {
             <h4 className="text-lg font-semibold text-white">Features</h4>
             <ul className="space-y-4">
               {featuresLinks.map((link) => (
-                <motion.li key={link.name}
+                <motion.li
+                  key={link.name}
                   whileHover={{ x: 5 }}
                   className="flex items-center space-x-2 group"
                 >
@@ -151,7 +173,8 @@ const Footer = () => {
             <h4 className="text-lg font-semibold text-white">Contact Us</h4>
             <ul className="space-y-4">
               {contactInfo.map((info, index) => (
-                <motion.li key={index}
+                <motion.li
+                  key={index}
                   whileHover={{ x: 5 }}
                   className="flex items-center space-x-2 text-gray-400 group"
                 >

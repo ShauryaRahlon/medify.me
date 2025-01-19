@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import {  Eye, EyeOff } from 'lucide-react';
-
+import React, { useState } from "react";
+import { Stethoscope, Eye, EyeOff } from "lucide-react";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -14,34 +13,39 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-      {/* Backdrop overlay */}
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-
-      {/* Modal container */}
+      <div
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
       <div className="w-full max-w-4xl bg-navy-900 rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.3)] overflow-hidden relative z-10 animate-[fadeIn_0.3s_ease-out]">
         <div className="flex flex-col md:flex-row md:h-[600px]">
-          {/* Left side - Image/Brand section */}
           <div className="bg-[#1a2942] p-6 md:p-8 flex flex-col justify-center items-center md:w-1/2">
             <div className="bg-blue-500/10 p-4 md:p-6 rounded-full mb-4">
-              <img src='/icons.webp' className="w-12 h-12 md:w-16 md:h-16 text-blue-400" />
+              <img
+                src="/icons.webp"
+                className="w-12 h-12 md:w-16 md:h-16 text-blue-400"
+              />
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">medify.me</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              medify.me
+            </h1>
             <p className="text-blue-200 text-center text-sm md:text-base">
-              Your trusted healthcare companion. Connect with doctors and manage your health journey seamlessly.
+              Your trusted healthcare companion. Connect with doctors and manage
+              your health journey seamlessly.
             </p>
           </div>
 
-          {/* Right side - Content section */}
           <div className="bg-[#0f172a] p-6 md:p-8 flex flex-col justify-center md:w-1/2">
             <div className="space-y-4 md:space-y-6">
               <h2 className="text-xl md:text-2xl font-semibold text-white text-center mb-6 md:mb-8">
                 Sign In
               </h2>
-
-              {/* Sign In Form */}
               <form className="space-y-4">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-300 mb-1"
+                  >
                     Email
                   </label>
                   <input
@@ -51,9 +55,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     placeholder="Enter your email"
                   />
                 </div>
-
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-300 mb-1"
+                  >
                     Password
                   </label>
                   <div className="relative">
@@ -80,19 +86,24 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   Sign In
                 </button>
               </form>
-
-              {/* Links */}
               <div className="flex flex-col items-center space-y-2 pt-4">
-                <a href="/signup" className="text-blue-400 hover:text-blue-300 text-sm transition-colors">
+                <a
+                  href="/signup"
+                  className="text-blue-400 hover:text-blue-300 text-sm transition-colors"
+                >
                   Sign up for an account
                 </a>
-                <a href="/doctor-signup" className="text-blue-400 hover:text-blue-300 text-sm transition-colors">
+                <a
+                  href="/doctor-signup"
+                  className="text-blue-400 hover:text-blue-300 text-sm transition-colors"
+                >
                   Are you a doctor?
                 </a>
               </div>
 
               <p className="text-xs md:text-sm text-gray-400 text-center mt-4 md:mt-6">
-                By signing in, you agree to our Terms of Service and Privacy Policy
+                By signing in, you agree to our Terms of Service and Privacy
+                Policy
               </p>
             </div>
           </div>

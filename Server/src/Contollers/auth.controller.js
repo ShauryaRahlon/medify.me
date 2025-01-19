@@ -3,13 +3,9 @@ import User from "../Models/user.model.js";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
-// import fileUpload from "express-fileupload";
-// import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Load environment variables
 dotenv.config();
-
-// const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 // Generate OTP
 function generateOTP() {
@@ -17,7 +13,7 @@ function generateOTP() {
 }
 
 // Signup Controller
-export const signup = async(req, res) => {
+export const signup = async (req, res) => {
     try {
         const { userName, email, password } = req.body;
 
@@ -157,31 +153,4 @@ export const login = async (req, res) => {
     }
 };
 
-// AI Handle Controller
-// export const aiHandle = async (req, res) => {
-//     try {
-//         if (!req.files || !req.files.image) {
-//             return res.status(400).send("No file uploaded.");
-//         }
 
-//         const image = req.files.image;
-//         const imageBuffer = image.data;
-
-//         const model = genAI.getGenerativeModel({ model: "models/gemini-1.5-pro" });
-
-//         const result = await model.generateContent([
-//             {
-//                 inlineData: {
-//                     data: imageBuffer.toString("base64"),
-//                     mimeType: image.mimetype,
-//                 },
-//             },
-//             "Medically analyze this image. If unrelated to the medical field, respond with Invalid image. Provide the response in a structured report format. Suggest precautions in bullet points if applicable.",
-//         ]);
-
-//         res.json({ report: result.response.text() });
-//     } catch (error) {
-//         console.error("Error in aiHandle:", error);
-//         res.status(500).send("Error processing the image.");
-//     }
-// };
