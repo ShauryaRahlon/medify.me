@@ -45,9 +45,10 @@ const SignUpPage: React.FC = () => {
       alert(response.data.message);
 
       // Redirect to the OTP verification page
-      navigate("/verify-otp", { state: { email: formData.email } });
+      navigate("/verifyOTP");
     } catch (err: any) {
       // Handle error response
+      console.log("Error in verifyOTP");
       console.error("Signup failed:", err.response?.data || err.message);
       setError(
         err.response?.data?.error || "An error occurred. Please try again."
