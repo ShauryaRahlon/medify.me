@@ -8,6 +8,7 @@ import NutritionAnalyzer from "./Pages/NutritionAnalyzerPage";
 import DoctorAuthModal from './components/DoctorAuthModal';
 import DocHomePage from './components/DocHomePage';
 import UserHome from './Pages/UserHome';
+import OtpVerification from "./components/Otpverify";
 function App() {
   return (
     <Router>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/doctor-auth" element={<DoctorAuthModal />} />
         <Route path="/Dochome" element={<DocHomePage />} />
         <Route path="/userhome" element={<UserHome />} />
+        <Route path="/verifyOTP" element={<OtpVerification/>} />
       </Routes>
     </Router>
   );
