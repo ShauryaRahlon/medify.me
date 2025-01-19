@@ -27,7 +27,7 @@ const features = [
 
 const Features = () => {
   return (
-    <div className="py-24 bg-black/50 relative overflow-hidden">
+    <div id='Services' className="py-24 bg-black/50 relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -47,7 +47,7 @@ const Features = () => {
             transition={{ duration: 0.5 }}
             className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"
           />
-          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent relative">
+          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent relative pb-1">
             Cutting-Edge Features
           </h2>
           <p className="mt-4 text-lg text-gray-400">

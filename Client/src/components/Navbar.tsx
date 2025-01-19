@@ -58,7 +58,7 @@ const Navbar = () => {
 
             {/* Desktop Menu */}
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
+              <button className="ml-10 flex items-baseline space-x-8">
                 {["Home", "Appointment", "Services", "FAQ", "About Us", "Login"].map(
                   (item) =>
                     item === "Login" ? (
@@ -74,6 +74,7 @@ const Navbar = () => {
                     ) : (
                       <motion.a
                         key={item}
+                        onClick={() => document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' })}
                         whileHover={{ scale: 1.05 }}
                         className="relative text-gray-300 hover:text-white px-3 py-2 rounded-md text-md font-medium cursor-pointer group"
                       >
@@ -82,7 +83,7 @@ const Navbar = () => {
                       </motion.a>
                     )
                 )}
-              </div>
+              </button>
             </div>
 
             {/* Mobile Menu Button */}

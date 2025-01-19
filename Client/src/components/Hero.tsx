@@ -18,12 +18,12 @@ const Hero = () => {
             transition={{ duration: 1 }}
             className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl -z-10"
           />
-          <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-500 via-green-400 to-blue-600 bg-clip-text text-transparent mb-8 animate-gradient bg-300% relative">
+          <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-500 via-green-400 to-blue-600 bg-clip-text text-transparent mb-4 animate-gradient bg-300% relative pb-2.5 ">
             The Future of Health Technology
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-12">
             Experience the next generation of health monitoring and diagnosis
-            with our AI-powered platform
+            with our AI-powered platform 
           </p>
 
           <motion.div
