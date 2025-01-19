@@ -5,6 +5,8 @@ import SymptomAnalyzer from "./Pages/SymptomAnalyzer";
 import AuthModal from './components/AuthModal';
 import SignUp from './components/SignUp';
 import NutritionAnalyzer from "./Pages/NutritionAnalyzerPage";
+import DoctorAuthModal from './components/DoctorAuthModal';
+import DocHomePage from './components/DocHomePage';
 function App() {
   return (
     <Router>
@@ -15,6 +17,8 @@ function App() {
         <Route path="/signin" element={<AuthModal isOpen={true} onClose={() => window.history.back()} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/nutri" element={<NutritionAnalyzer />} />
+        <Route path="/doctor-auth" element={<DoctorAuthModal />} />
+        <Route path="/home" element={<DocHomePage />} />
       </Routes>
     </Router>
   );
