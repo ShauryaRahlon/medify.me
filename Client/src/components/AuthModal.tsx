@@ -1,22 +1,91 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+interface LoginResponse {
+  token: string;
+  message?: string;
+}
+
+interface ErrorResponse {
+  message: string;
+  error?: string;
+}
+
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Your sign-in logic here (authentication, validation, etc.)
-    
-    // On successful sign-in, navigate to the user home page
-    navigate("/userhome"); // Redirect to user home page
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    // Clear error when user starts typing
+    if (error) setError("");
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(""); // Clear any previous errors
+
+    try {
+      const response = await axios.post<LoginResponse>(
+        "http://localhost:8000/api/auth/login",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // Check for both 200 and 201 status codes as successful responses
+      if (response.status === 200 || response.status === 201) {
+        const { token } = response.data;
+        if (!token) {
+          throw new Error("No token received from server");
+        }
+
+        // Store token and redirect
+        localStorage.setItem("authToken", token);
+        navigate("/userhome");
+      }
+    } catch (err) {
+      let errorMessage = "An error occurred during login. Please try again.";
+
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError<ErrorResponse>;
+
+        if (axiosError.response) {
+          // Server responded with error
+          errorMessage =
+            axiosError.response.data?.message ||
+            axiosError.response.data?.error ||
+            `Server error: ${axiosError.response.status}`;
+        } else if (axiosError.request) {
+          // No response received
+          errorMessage =
+            "No response from server. Please check your internet connection.";
+        }
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+      console.error("Login Error:", errorMessage);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -32,6 +101,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <img
                 src="/icons.webp"
                 className="w-12 h-12 md:w-16 md:h-16 text-blue-400"
+                alt="Medify.me logo"
               />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
@@ -48,6 +118,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <h2 className="text-xl md:text-2xl font-semibold text-white text-center mb-6 md:mb-8">
                 Sign In
               </h2>
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-4 py-2 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label
@@ -59,8 +134,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className="w-full px-3 py-2 bg-[#1a2942] border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                     placeholder="Enter your email"
+                    required
                   />
                 </div>
                 <div>
@@ -74,8 +153,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     <input
                       type={showPassword ? "text" : "password"}
                       id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
                       className="w-full px-3 py-2 bg-[#1a2942] border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                       placeholder="Enter your password"
+                      required
                     />
                     <button
                       type="button"
