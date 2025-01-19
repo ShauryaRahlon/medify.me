@@ -1,8 +1,19 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Activity } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { Activity, Loader2 } from "lucide-react";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    setTimeout(() => {
+      navigate("/signin");
+    }, 2000);
+  };
+
   return (
     <div className="relative pt-32 pb-20 sm:pt-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -18,12 +29,12 @@ const Hero = () => {
             transition={{ duration: 1 }}
             className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl -z-10"
           />
-          <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-500 via-green-400 to-blue-600 bg-clip-text text-transparent mb-4 animate-gradient bg-300% relative pb-2.5 ">
+          <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-500 via-green-400 to-blue-600 bg-clip-text text-transparent mb-4 animate-gradient bg-300% relative pb-2.5">
             The Future of Health Technology
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-12">
             Experience the next generation of health monitoring and diagnosis
-            with our AI-powered platform 
+            with our AI-powered platform
           </p>
 
           <motion.div
@@ -31,11 +42,68 @@ const Hero = () => {
             whileTap={{ scale: 0.95 }}
             className="inline-block"
           >
-            <a className="bg-gradient-to-r from-blue-500 to-green-400 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 relative overflow-hidden group">
+            <button
+              onClick={handleClick}
+              disabled={loading}
+              className="bg-gradient-to-r from-blue-500 to-green-400 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <span className="relative z-10 cursor-pointer">Get Started</span>
               <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-blue-500 opacity-0 group-hover:opacity-3 transition-opacity duration-300" />
-            </a>
+            </button>
           </motion.div>
+
+          {/* Enhanced Loading Animation */}
+          <AnimatePresence>
+            {loading && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50"
+              >
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  className="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-2xl"
+                >
+                  <div className="flex flex-col items-center gap-4">
+                    <motion.div
+                      animate={{ 
+                        rotate: 360,
+                        scale: [1, 1.2, 1],
+                      }}
+                      transition={{
+                        rotate: {
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "linear",
+                        },
+                        scale: {
+                          duration: 1,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }
+                      }}
+                      className="relative"
+                    >
+                      <div className="w-16 h-16 rounded-full border-4 border-blue-500/30">
+                        <div className="absolute inset-0 border-4 border-transparent border-t-blue-500 rounded-full animate-spin" />
+                      </div>
+                      <Loader2 className="w-8 h-8 text-blue-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                    </motion.div>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-white font-medium"
+                    >
+                      Starting your health Journey...
+                    </motion.p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         <motion.div
@@ -44,6 +112,7 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.2 }}
           className="mt-20 relative"
         >
+          {/* Rest of the phone UI code remains the same */}
           <div className="relative mx-auto w-full max-w-lg perspective-1000">
             <motion.div
               initial={{ rotateY: 25 }}
