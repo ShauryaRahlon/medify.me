@@ -14,22 +14,22 @@ const Navbar = () => {
     ["rgba(0, 0, 0, 0.3)", "rgba(0, 0, 0, 0.8)"]
   );
 
-  const [springs, api] = useSpring(() => ({
-    from: { transform: "perspective(1000px) rotateX(0deg)" },
-  }));
+  // const [springs, api] = useSpring(() => ({
+  //   from: { transform: "perspective(1000px) rotateX(0deg)" },
+  // }));
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const rotation =
-        window.scrollY > 50
-          ? "perspective(1000px) rotateX(-2deg)"
-          : "perspective(1000px) rotateX(0deg)";
-      api.start({ transform: rotation });
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const rotation =
+  //       window.scrollY > 50
+  //         ? "perspective(1000px) rotateX(-2deg)"
+  //         : "perspective(1000px) rotateX(0deg)";
+  //     api.start({ transform: rotation });
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [api]);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [api]);
 
   const handleAuthClick = () => {
     setIsAuthModalOpen(true); // Opens the AuthModal
@@ -59,9 +59,9 @@ const Navbar = () => {
             {/* Desktop Menu */}
             <div className="hidden md:block">
               <button className="ml-10 flex items-baseline space-x-8">
-                {["Home", "Appointment", "Services", "Feedbacks", "About Us", "Login"].map(
+                {["Home", "Appointment", "Services", "Feedbacks", "About Us", "Login","Sign Up","Log Out"].map(
                   (item) =>
-                    item === "Login" ? (
+                    item === "Login" || item === "Log Out" || item === "Sign Up" ? (
                       <motion.a
                         key={item}
                         whileHover={{ scale: 1.05 }}
@@ -106,7 +106,7 @@ const Navbar = () => {
             className="md:hidden"
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {["Home", "Appointment", "Services", "Feedbacks", "About Us", "Login"].map(
+              {["Home", "Appointment", "Services", "Feedbacks", "About Us", "Login","Sign Up","Log Out"].map(
                 (item) =>
                   item === "Login" ? (
                     <a
