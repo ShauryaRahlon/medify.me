@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
   UserCircle, 
   Calendar, 
@@ -91,10 +91,41 @@ function DocHomePage() {
             </div>
           </div>
 
-          {/* Other Content Sections */}
           {/* Queries */}
+          <div className="group relative bg-gradient-to-br from-navy-900 to-navy-950 rounded-lg p-4 border border-navy-800/30 hover:border-teal-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative">
+              <div className="flex justify-between items-start mb-2">
+                <MessageSquare className="h-5 w-5 text-teal-400" />
+                <span className="text-2xl font-bold text-white">{mockQueries.length}</span>
+              </div>
+              <h3 className="text-sm font-medium text-gray-400">Queries</h3>
+            </div>
+          </div>
+
           {/* Requests */}
-          {/* Patients */}
+          <div className="group relative bg-gradient-to-br from-navy-900 to-navy-950 rounded-lg p-4 border border-navy-800/30 hover:border-purple-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative">
+              <div className="flex justify-between items-start mb-2">
+                <ClipboardList className="h-5 w-5 text-purple-400" />
+                <span className="text-2xl font-bold text-white">{mockRequests.length}</span>
+              </div>
+              <h3 className="text-sm font-medium text-gray-400">Requests</h3>
+            </div>
+          </div>
+
+          {/* Total Patients */}
+          <div className="group relative bg-gradient-to-br from-navy-900 to-navy-950 rounded-lg p-4 border border-navy-800/30 hover:border-indigo-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative">
+              <div className="flex justify-between items-start mb-2">
+                <Users className="h-5 w-5 text-indigo-400" />
+                <span className="text-2xl font-bold text-white">{mockPatients.length}</span>
+              </div>
+              <h3 className="text-sm font-medium text-gray-400">Patients</h3>
+            </div>
+          </div>
         </div>
       </div>
     </div>

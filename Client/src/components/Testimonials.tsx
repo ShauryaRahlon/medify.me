@@ -93,7 +93,7 @@ const Testimonials = () => {
   }, [isHovered, scrollPosition, cardWidth, isResetting]);
 
   return (
-    <div className="py-12 sm:py-24 relative overflow-hidden">
+    <div id="Feedbacks" className="py-12 sm:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-blue-500/10" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">

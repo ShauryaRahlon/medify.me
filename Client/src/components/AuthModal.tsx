@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stethoscope, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -94,7 +94,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   Sign up for an account
                 </a>
                 <a
-                  href="/doctor-signup"
+                  href="/doctor-auth"
                   className="text-blue-400 hover:text-blue-300 text-sm transition-colors"
                 >
                   Are you a doctor?
