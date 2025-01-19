@@ -22,7 +22,7 @@ function App() {
         <Route path="/doctor-auth" element={<DoctorAuthModal />} />
         <Route path="/Dochome" element={<DocHomePage />} />
         <Route path="/userhome" element={<UserHome />} />
-        <Route path="/verifyOTP" element={<OtpVerification/>} />
+        <Route path="/otpverify" element={<OtpVerification/>} />
       </Routes>
     </Router>
   );
