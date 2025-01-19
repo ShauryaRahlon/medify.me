@@ -82,7 +82,7 @@ function Review() {
                 },
               },
               {
-                text: "Medically analyze this image. If unrelated to the medical field, respond with Invalid image.Also provide the response in a format which separates all the elements in the report. Suggest precautions in form of pointers based on the diagnosis if applicable.",
+                text: "Medically analyze this image. If unrelated to the medical field or if no medicines are prescribed, respond with Invalid image.Also provide the response in a format which separates all the elements in the report. Suggest precautions in form of pointers based on the diagnosis if applicable.",
               },
             ],
           },
