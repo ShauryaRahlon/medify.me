@@ -1,3 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+      @apply bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen text-gray-100;
+      background-attachment: fixed;
+    }
+  }
+  
+  .glass-morphism {
+    @apply bg-gray-900/40 backdrop-blur-lg border border-gray-700/50;
+  }
+  
+  .neon-glow {
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5),
+                 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  
+  .prose {
+    @apply text-gray-300;
+  }
+  
+  .prose strong {
+    @apply text-blue-400 font-semibold;
+  }
+  
+  .prose h2, .prose h3, .prose h4 {
+    @apply text-white mt-6 mb-4 neon-glow;
+  }
+  
+  .prose ul {
+    @apply list-disc list-inside space-y-2;
+  }
+  
+  .prose p {
+    @apply mb-4;
+  }
+  
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(59, 130, 246, 0.5) rgba(17, 24, 39, 0.7);
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-800/50 rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-blue-500/50 rounded-full hover:bg-blue-400/50 transition-colors;
+  }
