@@ -4,6 +4,7 @@ import Home from "./Pages/Home";
 import SymptomAnalyzer from "./Pages/SymptomAnalyzer";
 import AuthModal from './components/AuthModal';
 import SignUp from './components/SignUp';
+import NutritionAnalyzer from "./Pages/NutritionAnalyzerPage";
 function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/symptoms" element={<SymptomAnalyzer/>}/>
         <Route path="/signin" element={<AuthModal isOpen={true} onClose={() => window.history.back()} />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/nutri" element={<NutritionAnalyzer />} />
       </Routes>
     </Router>
   );

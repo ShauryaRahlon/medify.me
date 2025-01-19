@@ -36,6 +36,7 @@ import { useDropzone } from "react-dropzone";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import { Chatbot } from '../components/Chatbot';
 
 function Review() {
   const [file, setFile] = useState<File | null>(null);
@@ -147,7 +148,7 @@ function Review() {
                 Review Buddy
               </h1>
             </header>
-
+            <Chatbot />
             <div
               {...getRootProps()}
               className="border-2 border-dashed border-neutral-800 rounded-xl p-12 text-center cursor-pointer transition-all duration-300 hover:border-neutral-700 hover:bg-white/5 bg-black/20 backdrop-blur-sm shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 active:translate-y-2"

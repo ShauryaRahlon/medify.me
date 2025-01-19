@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Stethoscope, AlertCircle, Loader2, Brain, Heart, ClipboardList } from 'lucide-react';
 import { analyzeSymptoms } from '../lib/gemini';
+import { Chatbot } from '../components/Chatbot';
 
 type Medicine = {
   name: string;
@@ -191,6 +192,7 @@ const SymptomAnalyzerPage = () => {
           </motion.p>
         </motion.div>
       </div>
+      <Chatbot />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import Hero from "../components/Hero";
 import Features from "../components/Features";
 import Footer from "../components/Footer";
 import Testimonials from "../components/Testimonials";
+import { Chatbot } from '../components/Chatbot';
 function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white overflow-hidden">
@@ -15,6 +16,7 @@ function Home() {
       <Hero />
       <Features />
       <Testimonials/>
+      <Chatbot />
       <Footer />
 
     </div>
