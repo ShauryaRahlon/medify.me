@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import NutritionAnalyzer from "./Pages/NutritionAnalyzerPage";
 import DoctorAuthModal from './components/DoctorAuthModal';
 import DocHomePage from './components/DocHomePage';
+import UserHome from './Pages/UserHome';
 function App() {
   return (
     <Router>
@@ -18,7 +19,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/nutri" element={<NutritionAnalyzer />} />
         <Route path="/doctor-auth" element={<DoctorAuthModal />} />
-        <Route path="/home" element={<DocHomePage />} />
+        <Route path="/Dochome" element={<DocHomePage />} />
+        <Route path="/userhome" element={<UserHome />} />
       </Routes>
     </Router>
   );
