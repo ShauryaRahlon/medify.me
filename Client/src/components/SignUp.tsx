@@ -1,13 +1,14 @@
-import { Stethoscope } from 'lucide-react';
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Stethoscope } from "lucide-react";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUpPage: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '', // Added confirmPassword
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "", // Added confirmPassword
   });
   const [error, setError] = useState<string | null>(null); // Error state for validation
 
@@ -19,19 +20,38 @@ const SignUpPage: React.FC = () => {
     setError(null); // Clear the error on user input
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match. Please try again.');
+      setError("Passwords do not match. Please try again.");
       return;
     }
 
-    console.log('Form Data:', formData);
+    try {
+      // Send signup request to the backend
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/signup",
+        {
+          userName: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }
+      );
 
-    // Redirect to Medical History page
-    navigate('/userhome');
+      // Handle success response
+      console.log("Signup successful:", response.data);
+      alert(response.data.message);
+      navigate("/verifyOTP");
+    } catch (err: any) {
+      // Handle error response
+      console.log("Error in verifyOTP");
+      console.error("Signup failed:", err.response?.data || err.message);
+      setError(
+        err.response?.data?.error || "An error occurred. Please try again."
+      );
+    }
   };
 
   return (
@@ -56,9 +76,7 @@ const SignUpPage: React.FC = () => {
 
           {/* Social Buttons */}
           <div className="flex justify-center space-x-4 mb-6">
-            <button
-              className="flex items-center bg-[#3b5998] text-white px-4 py-2 rounded-lg hover:bg-[#314e88] transition-all"
-            >
+            <button className="flex items-center bg-[#3b5998] text-white px-4 py-2 rounded-lg hover:bg-[#314e88] transition-all">
               <i className="fab fa-google mr-2"></i> Sign up with Google
             </button>
           </div>
@@ -148,7 +166,7 @@ const SignUpPage: React.FC = () => {
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <button
-              type="submit"
+              onClick={handleSubmit}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all"
             >
               Create Account
@@ -158,7 +176,7 @@ const SignUpPage: React.FC = () => {
           {/* Footer */}
           <div className="text-center mt-6">
             <span className="text-gray-400">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link to="/" className="text-blue-400 hover:text-blue-300">
                 Log in
               </Link>
