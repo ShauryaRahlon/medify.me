@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Menu,
   X,
@@ -19,13 +19,13 @@ import {
   ChevronRight,
   Users,
   FileText,
-  BarChart
-} from 'lucide-react';
+  BarChart,
+} from "lucide-react";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isProfileOpen, setProfileOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState('Dashboard');
+  const [activeItem, setActiveItem] = useState("Dashboard");
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
   // Handle responsive sidebar
@@ -38,55 +38,97 @@ function App() {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const sidebarItems = [
-    { icon: <Home className="sidebar-icon" />, label: 'Dashboard', category: 'main' },
-    { icon: <Bell className="sidebar-icon" />, label: 'Notifications', category: 'main' },
-    { icon: <Calendar className="sidebar-icon" />, label: 'Appointments', category: 'main' },
-    { icon: <Users className="sidebar-icon" />, label: 'Doctors', category: 'health' },
-    { icon: <FileText className="sidebar-icon" />, label: 'Records', category: 'health' },
-    { icon: <BarChart className="sidebar-icon" />, label: 'Analytics', category: 'health' },
-    { icon: <Settings className="sidebar-icon" />, label: 'Settings', category: 'other' },
-    { icon: <HelpCircle className="sidebar-icon" />, label: 'Help', category: 'other' }
+    {
+      icon: <Home className="sidebar-icon" />,
+      label: "Dashboard",
+      category: "main",
+    },
+    {
+      icon: <Bell className="sidebar-icon" />,
+      label: "Notifications",
+      category: "main",
+    },
+    {
+      icon: <Calendar className="sidebar-icon" />,
+      label: "Appointments",
+      category: "main",
+    },
+    {
+      icon: <Users className="sidebar-icon" />,
+      label: "Doctors",
+      category: "health",
+    },
+    {
+      icon: <FileText className="sidebar-icon" />,
+      label: "Records",
+      category: "health",
+    },
+    {
+      icon: <BarChart className="sidebar-icon" />,
+      label: "Analytics",
+      category: "health",
+    },
+    {
+      icon: <Settings className="sidebar-icon" />,
+      label: "Settings",
+      category: "other",
+    },
+    {
+      icon: <HelpCircle className="sidebar-icon" />,
+      label: "Help",
+      category: "other",
+    },
   ];
 
   const features = [
     {
-      title: 'Connect to Doctor',
+      title: "Connect to Doctor",
       icon: <Stethoscope className="w-8 h-8 md:w-12 md:h-12 text-blue-400" />,
-      description: 'Get instant consultation with certified doctors',
-      bgGradient: 'from-gray-800 to-gray-700'
+      description: "Get instant consultation with certified doctors",
+      bgGradient: "from-gray-800 to-gray-700",
     },
     {
-      title: 'Symptoms Detector',
+      title: "Symptoms Detector",
       icon: <Brain className="w-8 h-8 md:w-12 md:h-12 text-purple-400" />,
-      description: 'Check your symptoms and get instant analysis',
-      bgGradient: 'from-gray-800 to-gray-700',
-      path: '/symptoms',
+      description: "Check your symptoms and get instant analysis",
+      bgGradient: "from-gray-800 to-gray-700",
+      path: "/symptoms",
     },
     {
-      title: 'Food Nutrition Checker',
+      title: "Food Nutrition Checker",
       icon: <Apple className="w-8 h-8 md:w-12 md:h-12 text-green-400" />,
-      description: 'Analyze nutritional value of your meals',
-      bgGradient: 'from-gray-800 to-gray-700',
-      path: '/nutri'
+      description: "Analyze nutritional value of your meals",
+      bgGradient: "from-gray-800 to-gray-700",
+      path: "/nutri",
     },
     {
-      title: 'Prescription Check',
+      title: "Prescription Check",
       icon: <Pill className="w-8 h-8 md:w-12 md:h-12 text-red-400" />,
-      description: 'Verify and manage your prescriptions',
-      bgGradient: 'from-gray-800 to-gray-700',
-      path:'/review'
-    }
+      description: "Verify and manage your prescriptions",
+      bgGradient: "from-gray-800 to-gray-700",
+      path: "/review",
+    },
   ];
+
+  const handleLogOutClick = () => {
+    localStorage.removeItem("token"); // If you're using token-based authentication
+    localStorage.removeItem("user");
+    navigate("/");
+  };
 
   // Mobile overlay for sidebar
   const Overlay = () => (
-    <div 
-      className={`fixed inset-0 bg-black/50 z-10 transition-opacity ${isSidebarOpen && isMobile ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+    <div
+      className={`fixed inset-0 bg-black/50 z-10 transition-opacity ${
+        isSidebarOpen && isMobile
+          ? "opacity-100"
+          : "opacity-0 pointer-events-none"
+      }`}
       onClick={() => setSidebarOpen(false)}
     />
   );
@@ -99,16 +141,28 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100">
       <Overlay />
       {/* Sidebar */}
-      <div 
+      <div
         className={`fixed top-0 left-0 h-full transition-all duration-300 z-20 bg-gray-900/90 backdrop-blur-lg border-r border-gray-700/50
-          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-          ${isSidebarOpen ? 'w-72' : 'w-fit'}
-          ${isMobile ? 'w-72' : ''}`}
+          ${
+            isSidebarOpen
+              ? "translate-x-0"
+              : "-translate-x-full md:translate-x-0"
+          }
+          ${isSidebarOpen ? "w-72" : "w-fit"}
+          ${isMobile ? "w-72" : ""}`}
       >
         <div className="p-4 md:p-6 border-b border-gray-700/50">
           <div className="flex items-center justify-between">
-            <div className={`flex items-center space-x-3 ${!isSidebarOpen && !isMobile && 'hidden'}`}>
-              <img src="./icons.webp" alt="Logo Image" className="w-8 h-8 md:w-10 md:h-10" />
+            <div
+              className={`flex items-center space-x-3 ${
+                !isSidebarOpen && !isMobile && "hidden"
+              }`}
+            >
+              <img
+                src="./icons.webp"
+                alt="Logo Image"
+                className="w-8 h-8 md:w-10 md:h-10"
+              />
               <h1 className="font-bold text-lg md:text-xl text-blue-400 neon-glow">
                 medify.me
               </h1>
@@ -121,7 +175,7 @@ function App() {
             </button>
           </div>
         </div>
-     
+
         <div className="px-2 md:px-4 mt-4 md:mt-6">
           {Object.entries(
             sidebarItems.reduce((acc, item) => {
@@ -144,17 +198,33 @@ function App() {
                     if (isMobile) setSidebarOpen(false);
                   }}
                   className={`w-full px-4 md:px-6 py-3 md:py-4 text-left transition-all duration-300 flex items-center rounded-lg mb-1
-                    ${activeItem === item.label ? 'bg-blue-500/20 text-blue-400' : 'text-gray-300 hover:bg-gray-700/30'}`}
+                    ${
+                      activeItem === item.label
+                        ? "bg-blue-500/20 text-blue-400"
+                        : "text-gray-300 hover:bg-gray-700/30"
+                    }`}
                 >
                   <div className="flex items-center w-full">
-                    <div className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-center">{item.icon}</div>
+                    <div className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-center">
+                      {item.icon}
+                    </div>
                     {(isSidebarOpen || isMobile) && (
                       <>
-                        <span className="ml-3 md:ml-4 font-medium text-sm md:text-base">{item.label}</span>
-                        <ChevronRight 
+                        <span className="ml-3 md:ml-4 font-medium text-sm md:text-base">
+                          {item.label}
+                        </span>
+                        <ChevronRight
                           className={`ml-auto w-4 h-4 transition-transform duration-200 
-                            ${activeItem === item.label ? 'opacity-100' : 'opacity-0'}
-                            ${activeItem === item.label ? 'translate-x-0' : '-translate-x-2'}`}
+                            ${
+                              activeItem === item.label
+                                ? "opacity-100"
+                                : "opacity-0"
+                            }
+                            ${
+                              activeItem === item.label
+                                ? "translate-x-0"
+                                : "-translate-x-2"
+                            }`}
                         />
                       </>
                     )}
@@ -167,7 +237,11 @@ function App() {
       </div>
 
       {/* Main Content */}
-      <div className={`transition-all duration-300 ${isSidebarOpen && !isMobile ? 'ml-72' : 'ml-0 md:ml-20'}`}>
+      <div
+        className={`transition-all duration-300 ${
+          isSidebarOpen && !isMobile ? "ml-72" : "ml-0 md:ml-20"
+        }`}
+      >
         <header className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-lg border-b border-gray-700/50">
           <div className="flex justify-between items-center p-4">
             <div className="flex items-center">
@@ -179,7 +253,9 @@ function App() {
                   <Menu className="w-6 h-6" />
                 </button>
               )}
-              <span className="text-base md:text-lg font-semibold text-gray-100 ml-5">Health Dashboard</span>
+              <span className="text-base md:text-lg font-semibold text-gray-100 ml-5">
+                Health Dashboard
+              </span>
             </div>
             <div className="relative">
               <button
@@ -202,7 +278,10 @@ function App() {
                     <User className="w-4 h-4 mr-2" />
                     Profile
                   </button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-red-400">
+                  <button
+                    onClick={handleLogOutClick}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-red-400"
+                  >
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
                   </button>
@@ -217,9 +296,11 @@ function App() {
             <h1 className="text-2xl md:text-4xl font-bold text-blue-400 neon-glow mb-2 md:mb-4">
               Welcome Back, John!
             </h1>
-            <p className="text-sm md:text-base text-gray-300">Your health journey continues. Here's your daily overview.</p>
+            <p className="text-sm md:text-base text-gray-300">
+              Your health journey continues. Here's your daily overview.
+            </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
             {features.map((feature, index) => (
               <div
@@ -227,7 +308,8 @@ function App() {
                 className="group cursor-pointer"
                 onClick={() => handleFeatureClick(feature.path)}
               >
-                <div className={`h-full bg-gradient-to-br ${feature.bgGradient} p-4 md:p-6 rounded-xl md:rounded-2xl border border-gray-700/50 
+                <div
+                  className={`h-full bg-gradient-to-br ${feature.bgGradient} p-4 md:p-6 rounded-xl md:rounded-2xl border border-gray-700/50 
                   transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10`}
                 >
                   <div className="flex items-start space-x-3 md:space-x-4">
@@ -238,7 +320,9 @@ function App() {
                       <h3 className="text-lg md:text-xl font-semibold text-gray-100 mb-1 md:mb-2">
                         {feature.title}
                       </h3>
-                      <p className="text-sm md:text-base text-gray-300">{feature.description}</p>
+                      <p className="text-sm md:text-base text-gray-300">
+                        {feature.description}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -253,17 +337,37 @@ function App() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {[
-                { label: 'Appointments', value: '3 Upcoming', icon: <Calendar className="w-5 h-5 md:w-6 md:h-6 text-blue-400" /> },
-                { label: 'Prescriptions', value: '2 Active', icon: <Pill className="w-5 h-5 md:w-6 md:h-6 text-green-400" /> },
-                { label: 'Health Score', value: '85/100', icon: <Activity className="w-5 h-5 md:w-6 md:h-6 text-purple-400" /> }
+                {
+                  label: "Appointments",
+                  value: "3 Upcoming",
+                  icon: (
+                    <Calendar className="w-5 h-5 md:w-6 md:h-6 text-blue-400" />
+                  ),
+                },
+                {
+                  label: "Prescriptions",
+                  value: "2 Active",
+                  icon: (
+                    <Pill className="w-5 h-5 md:w-6 md:h-6 text-green-400" />
+                  ),
+                },
+                {
+                  label: "Health Score",
+                  value: "85/100",
+                  icon: (
+                    <Activity className="w-5 h-5 md:w-6 md:h-6 text-purple-400" />
+                  ),
+                },
               ].map((stat, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="bg-gray-900/50 rounded-lg md:rounded-xl p-3 md:p-4 border border-gray-700/50
                     transform transition-all hover:scale-105 hover:shadow-xl hover:shadow-blue-500/10"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm md:text-base text-gray-300">{stat.label}</p>
+                    <p className="text-sm md:text-base text-gray-300">
+                      {stat.label}
+                    </p>
                     {stat.icon}
                   </div>
                   <p className="text-xl md:text-2xl font-bold text-blue-400 neon-glow">

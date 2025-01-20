@@ -6,6 +6,8 @@ import axios, { AxiosError } from "axios";
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAuthModelOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface LoginResponse {
@@ -18,7 +20,12 @@ interface ErrorResponse {
   error?: string;
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+const AuthModal: React.FC<AuthModalProps> = ({
+  isOpen,
+  onClose,
+  setIsOpen,
+  setIsAuthModelOpen,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -36,7 +43,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(""); // Clear any previous errors
 
     try {
       const response = await axios.post<LoginResponse>(
@@ -56,9 +62,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           throw new Error("No token received from server");
         }
 
+        console.log("Successfully logged in");
+
         // Store token and redirect
         localStorage.setItem("authToken", token);
-        navigate("/userhome");
+        setIsAuthModelOpen(false); // Close the modal after successful login
+        setIsOpen(true);
       }
     } catch (err) {
       let errorMessage = "An error occurred during login. Please try again.";
@@ -171,7 +180,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 <button
-                  type="submit"
+                  onClick={handleSubmit}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 md:py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/20"
                 >
                   Sign In
