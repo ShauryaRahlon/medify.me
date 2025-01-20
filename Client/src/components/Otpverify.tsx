@@ -32,17 +32,19 @@ const Otpverify = () => {
     }
 
     try {
-      const email = localStorage.getItem("email"); // Assume the email is saved during signup
+      const email = localStorage.getItem("email");
       if (!email)
         throw new Error("Email not found. Please try signing up again.");
 
       const response = await axios.post(
-        "http://localhost:8000/api/auth/verify-otp",
+        "http://localhost:8000/api/auth/verifyOTP", //wrong route
         {
           email,
           otp: enteredOtp,
         }
       );
+
+      console.log(response);
 
       toast.success(response.data.message);
       setIsVerified(true);

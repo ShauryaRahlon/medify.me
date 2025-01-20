@@ -45,6 +45,9 @@ const SignUpPage: React.FC = () => {
       );
 
       console.log("Signup successful:", response.data);
+
+      localStorage.setItem("email", formData.email);
+
       toast.success("OTP generated successfully! Redirecting...");
       setTimeout(() => {
         navigate("/otp");

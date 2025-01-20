@@ -9,6 +9,7 @@ import DoctorAuthModal from "./components/DoctorAuthModal";
 import DocHomePage from "./components/DocHomePage";
 import UserHome from "./Pages/UserHome";
 import Otpverify from "./components/Otpverify";
+import Connect from "./Pages/Connect";
 function App() {
   return (
     <Router>
@@ -22,6 +23,7 @@ function App() {
             <AuthModal isOpen={true} onClose={() => window.history.back()} />
           }
         />
+        <Route path="/connect" element={<Connect />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/nutri" element={<NutritionAnalyzer />} />
         <Route path="/doctor-auth" element={<DoctorAuthModal />} />
