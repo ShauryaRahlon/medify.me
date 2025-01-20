@@ -19,6 +19,7 @@ const Otpverify = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsVerified(true);
+    navigate('/userhome');
   };
 
   const handleBack = () => {
@@ -85,6 +86,7 @@ const Otpverify = () => {
         <button
           className="relative mt-8 w-full py-2.5 bg-gradient-to-r from-blue-500 to-green-500 text-white rounded-lg shadow-lg hover:shadow-xl hover:from-blue-600 hover:to-green-600 active:scale-[0.98] transition-all duration-300 font-medium overflow-hidden group"
           type="submit"
+          onClick={handleSubmit}
         >
           <span className="relative z-10">Verify</span>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

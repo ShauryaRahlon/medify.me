@@ -23,12 +23,8 @@ function App() {
         <Route path="/doctor-auth" element={<DoctorAuthModal />} />
         <Route path="/Dochome" element={<DocHomePage />} />
         <Route path="/userhome" element={<UserHome />} />
-<<<<<<< HEAD
         <Route path="/verifyOTP" element={<OtpVerification/>} />
         <Route path="/medical-history" element={<MedicalHistory/>} />
-=======
-        <Route path="/otpverify" element={<OtpVerification/>} />
->>>>>>> 9e87fb1b08fcdd27f5c297cc653b7c6c3598c0c4
       </Routes>
     </Router>
   );

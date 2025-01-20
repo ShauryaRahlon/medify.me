@@ -141,8 +141,8 @@ function Review() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808020_1px,transparent_1px),linear-gradient(to_bottom,#80808020_1px,transparent_1px)] bg-[size:14px_24px]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#000000,transparent)]" />
       <div className="relative z-10">
-        <div className="container mx-auto px-4 py-8">
-        <nav className=" p-1 mb-1">
+        <div className="container mx-auto px-4 py-4">
+        <nav className=" p-1 mb-8">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
