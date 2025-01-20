@@ -10,7 +10,7 @@ const Hero = () => {
   const handleClick = () => {
     setLoading(true);
     setTimeout(() => {
-      navigate("/signin");
+      navigate("/userhome");
     }, 2000);
   };
 

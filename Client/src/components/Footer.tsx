@@ -36,9 +36,9 @@ const Footer = () => {
   ];
 
   const contactInfo = [
-    { icon: <Mail size={16} />, text: "contact@healthtech.com" },
-    { icon: <Phone size={16} />, text: "+1 (555) 123-4567" },
-    { icon: <MapPin size={16} />, text: "San Francisco, CA" },
+    { icon: <Mail size={16} />, text: "support@medify.me" },
+    { icon: <Phone size={16} />, text: "+91 (923) 831-4281" },
+    { icon: <MapPin size={16} />, text: "Noida, India" },
     { icon: <HelpCircle size={16} />, text: "24/7 Support" },
   ];
 

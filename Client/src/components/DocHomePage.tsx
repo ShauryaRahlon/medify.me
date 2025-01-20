@@ -1,23 +1,63 @@
-import { useState } from 'react';
-import { 
-  UserCircle, 
-  Calendar, 
-  MessageSquare, 
-  ClipboardList, 
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Menu,
+  X,
+  Stethoscope,
+  Calendar,
+  MessageSquare,
+  ClipboardList,
   Users,
-  ChevronDown,
+  User,
   LogOut,
-  User
+  Home,
+  Settings,
+  Bell,
+  HelpCircle,
+  Activity,
+  ChevronRight,
+  FileText,
+  BarChart,
+  Clock
 } from 'lucide-react';
 
 function DocHomePage() {
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isProfileOpen, setProfileOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState('Dashboard');
+  const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
+
+  // Handle responsive sidebar
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth < 768) {
+        setSidebarOpen(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const sidebarItems = [
+    { icon: <Home className="sidebar-icon" />, label: 'Dashboard', category: 'main' },
+    { icon: <Calendar className="sidebar-icon" />, label: 'Appointments', category: 'main' },
+    { icon: <MessageSquare className="sidebar-icon" />, label: 'Messages', category: 'main' },
+    { icon: <Users className="sidebar-icon" />, label: 'Patients', category: 'clinical' },
+    { icon: <FileText className="sidebar-icon" />, label: 'Records', category: 'clinical' },
+    { icon: <BarChart className="sidebar-icon" />, label: 'Analytics', category: 'clinical' },
+    { icon: <Settings className="sidebar-icon" />, label: 'Settings', category: 'other' },
+    { icon: <HelpCircle className="sidebar-icon" />, label: 'Help', category: 'other' }
+  ];
 
   const mockAppointments = [
-    { id: 1, patient: "John Doe", time: "10:00 AM", notes: "Regular checkup" },
-    { id: 2, patient: "Sarah Smith", time: "11:30 AM", notes: "Follow-up" },
-    { id: 3, patient: "Mike Johnson", time: "2:00 PM", notes: "Consultation" },
-    { id: 4, patient: "Emma Wilson", time: "3:30 PM", notes: "Test results review" },
+    { id: 1, patient: "John Doe", time: "10:00 AM", notes: "Regular checkup", status: "Upcoming" },
+    { id: 2, patient: "Sarah Smith", time: "11:30 AM", notes: "Follow-up", status: "Upcoming" },
+    { id: 3, patient: "Mike Johnson", time: "2:00 PM", notes: "Consultation", status: "Upcoming" },
+    { id: 4, patient: "Emma Wilson", time: "3:30 PM", notes: "Test results review", status: "Upcoming" },
   ];
 
   const mockQueries = [
@@ -26,107 +66,210 @@ function DocHomePage() {
     { id: 3, patient: "Linda White", question: "Are these side effects normal?", time: "1 day ago" },
   ];
 
-  const mockRequests = [
-    { id: 1, type: "Reschedule", patient: "Peter Parker", details: "Request to move appointment to next week" },
-    { id: 2, type: "Certificate", patient: "Mary Jane", details: "Medical certificate for work" },
-    { id: 3, type: "Prescription", patient: "Harry Osborn", details: "Prescription renewal request" },
-  ];
-
-  const mockPatients = [
-    { id: 1, name: "James Wilson", contact: "+1 234-567-8900", lastVisit: "2024-02-15" },
-    { id: 2, name: "Emily Davis", contact: "+1 234-567-8901", lastVisit: "2024-02-14" },
-    { id: 3, name: "Robert Brown", contact: "+1 234-567-8902", lastVisit: "2024-02-13" },
-    { id: 4, name: "Lisa Anderson", contact: "+1 234-567-8903", lastVisit: "2024-02-12" },
-  ];
+  // Mobile overlay for sidebar
+  const Overlay = () => (
+    <div 
+      className={`fixed inset-0 bg-black/50 z-10 transition-opacity ${isSidebarOpen && isMobile ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      onClick={() => setSidebarOpen(false)}
+    />
+  );
 
   return (
-    <div className="min-h-screen bg-navy-950">
-      {/* Navbar */}
-      <nav className="bg-gradient-to-r from-navy-950 to-navy-900 border-b border-navy-800/50 backdrop-blur-sm">
-        <div className="container mx-auto flex justify-between items-center py-3 px-4">
-          <div className="flex items-center space-x-2">
-            <UserCircle className="h-6 w-6 text-blue-400" />
-            <span className="text-lg font-bold bg-gradient-to-r from-blue-400 to-teal-300 bg-clip-text text-transparent">
-              Doctor Dashboard
-            </span>
-          </div>
-          
-          <div className="relative">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100">
+      <Overlay />
+      {/* Sidebar */}
+      <div 
+        className={`fixed top-0 left-0 h-full transition-all duration-300 z-20 bg-gray-900/90 backdrop-blur-lg border-r border-gray-700/50
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          ${isSidebarOpen ? 'w-72' : 'w-fit'}
+          ${isMobile ? 'w-72' : ''}`}
+      >
+        <div className="p-4 md:p-6 border-b border-gray-700/50">
+          <div className="flex items-center justify-between">
+            <div className={`flex items-center space-x-3 ${!isSidebarOpen && !isMobile && 'hidden'}`}>
+              <Stethoscope className="w-8 h-8 md:w-10 md:h-10 text-blue-400" />
+              <h1 className="font-bold text-lg md:text-xl text-blue-400 neon-glow">
+                DocPortal
+              </h1>
+            </div>
             <button
-              onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="flex items-center space-x-2 text-white/80 hover:text-white transition-colors"
+              onClick={() => setSidebarOpen(!isSidebarOpen)}
+              className="p-2 rounded-lg hover:bg-gray-700/50 transition-colors text-gray-300"
             >
-              <UserCircle className="h-5 w-5" />
-              <ChevronDown className="h-3 w-3" />
+              {isSidebarOpen ? <X /> : <Menu />}
             </button>
-            
-            {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-navy-900 rounded-lg shadow-xl border border-navy-800/50 py-1 z-10">
-                <button className="flex items-center px-4 py-2 text-gray-300 hover:bg-navy-800/50 w-full">
-                  <User className="h-4 w-4 mr-2" />
-                  View Profile
-                </button>
-                <button className="flex items-center px-4 py-2 text-gray-300 hover:bg-navy-800/50 w-full">
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </button>
-              </div>
-            )}
           </div>
         </div>
-      </nav>
+
+        <div className="px-2 md:px-4 mt-4 md:mt-6">
+          {Object.entries(
+            sidebarItems.reduce((acc, item) => {
+              if (!acc[item.category]) acc[item.category] = [];
+              acc[item.category].push(item);
+              return acc;
+            }, {})
+          ).map(([category, items]) => (
+            <div key={category} className="mb-6 md:mb-8">
+              {(isSidebarOpen || isMobile) && (
+                <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 md:mb-4 px-2">
+                  {category}
+                </h2>
+              )}
+              {(items as typeof sidebarItems).map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setActiveItem(item.label);
+                    if (isMobile) setSidebarOpen(false);
+                  }}
+                  className={`w-full px-4 md:px-6 py-3 md:py-4 text-left transition-all duration-300 flex items-center rounded-lg mb-1
+                    ${activeItem === item.label ? 'bg-blue-500/20 text-blue-400' : 'text-gray-300 hover:bg-gray-700/30'}`}
+                >
+                  <div className="flex items-center w-full">
+                    <div className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-center">{item.icon}</div>
+                    {(isSidebarOpen || isMobile) && (
+                      <>
+                        <span className="ml-3 md:ml-4 font-medium text-sm md:text-base">{item.label}</span>
+                        <ChevronRight 
+                          className={`ml-auto w-4 h-4 transition-transform duration-200 
+                            ${activeItem === item.label ? 'opacity-100' : 'opacity-0'}
+                            ${activeItem === item.label ? 'translate-x-0' : '-translate-x-2'}`}
+                        />
+                      </>
+                    )}
+                  </div>
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {/* Current Appointments */}
-          <div className="group relative bg-gradient-to-br from-navy-900 to-navy-950 rounded-lg p-4 border border-navy-800/30 hover:border-blue-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative">
-              <div className="flex justify-between items-start mb-2">
-                <Calendar className="h-5 w-5 text-blue-400" />
-                <span className="text-2xl font-bold text-white">{mockAppointments.length}</span>
-              </div>
-              <h3 className="text-sm font-medium text-gray-400">Appointments</h3>
+      <div className={`transition-all duration-300 ${isSidebarOpen && !isMobile ? 'ml-72' : 'ml-0 md:ml-20'}`}>
+        <header className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-lg border-b border-gray-700/50">
+          <div className="flex justify-between items-center p-4">
+            <div className="flex items-center">
+              {isMobile && (
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="p-2 mr-2 rounded-lg hover:bg-gray-700/50 transition-colors text-gray-300"
+                >
+                  <Menu className="w-6 h-6" />
+                </button>
+              )}
+              <span className="text-base md:text-lg font-semibold text-gray-100 ml-5">Doctor Dashboard</span>
             </div>
+            <div className="relative">
+              <button
+                onClick={() => setProfileOpen(!isProfileOpen)}
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700/50 transition-all"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3"
+                  alt="Doctor Profile"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-full ring-2 ring-gray-700"
+                />
+                <div className="hidden md:block">
+                  <p className="text-sm font-medium text-gray-100">Dr. Sarah Johnson</p>
+                </div>
+              </button>
+
+              {isProfileOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-gray-800/90 backdrop-blur-lg rounded-xl shadow-xl py-2 z-10 border border-gray-700/50">
+                  <button className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-gray-300">
+                    <User className="w-4 h-4 mr-2" />
+                    Profile
+                  </button>
+                  <button className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-red-400">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </header>
+
+        <main className="p-4 md:p-8">
+          <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-8 mb-6 md:mb-8 border border-gray-700/50 transform hover:scale-[1.01] transition-all">
+            <h1 className="text-2xl md:text-4xl font-bold text-blue-400 neon-glow mb-2 md:mb-4">
+              Welcome, Dr. Sarah!
+            </h1>
+            <p className="text-sm md:text-base text-gray-300">Here's your practice overview for today.</p>
           </div>
 
-          {/* Queries */}
-          <div className="group relative bg-gradient-to-br from-navy-900 to-navy-950 rounded-lg p-4 border border-navy-800/30 hover:border-teal-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative">
-              <div className="flex justify-between items-start mb-2">
-                <MessageSquare className="h-5 w-5 text-teal-400" />
-                <span className="text-2xl font-bold text-white">{mockQueries.length}</span>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            {[
+              { label: 'Appointments', value: mockAppointments.length, icon: <Calendar className="text-blue-400" /> },
+              { label: 'Patient Queries', value: mockQueries.length, icon: <MessageSquare className="text-green-400" /> },
+              { label: 'Total Patients', value: '120', icon: <Users className="text-purple-400" /> },
+              { label: 'Hours Today', value: '8.5', icon: <Clock className="text-orange-400" /> }
+            ].map((stat, index) => (
+              <div
+                key={index}
+                className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-4 border border-gray-700/50 hover:border-blue-500/30 transition-all hover:scale-[1.02]"
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <div className="p-2 bg-gray-900/50 rounded-lg">
+                    {React.cloneElement(stat.icon, { className: `w-5 h-5 md:w-6 md:h-6 ${stat.icon.props.className}` })}
+                  </div>
+                  <span className="text-2xl font-bold text-white">{stat.value}</span>
+                </div>
+                <h3 className="text-sm font-medium text-gray-400">{stat.label}</h3>
               </div>
-              <h3 className="text-sm font-medium text-gray-400">Queries</h3>
-            </div>
+            ))}
           </div>
 
-          {/* Requests */}
-          <div className="group relative bg-gradient-to-br from-navy-900 to-navy-950 rounded-lg p-4 border border-navy-800/30 hover:border-purple-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative">
-              <div className="flex justify-between items-start mb-2">
-                <ClipboardList className="h-5 w-5 text-purple-400" />
-                <span className="text-2xl font-bold text-white">{mockRequests.length}</span>
+          {/* Today's Schedule */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50">
+              <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+                <Calendar className="w-5 h-5 text-blue-400 mr-2" />
+                Today's Appointments
+              </h2>
+              <div className="space-y-4">
+                {mockAppointments.map((appointment) => (
+                  <div
+                    key={appointment.id}
+                    className="bg-gray-900/50 p-4 rounded-lg border border-gray-700/30 hover:border-blue-500/30 transition-all"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h3 className="font-medium text-white">{appointment.patient}</h3>
+                        <p className="text-sm text-gray-400">{appointment.notes}</p>
+                      </div>
+                      <span className="text-sm font-medium text-blue-400">{appointment.time}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-sm font-medium text-gray-400">Requests</h3>
             </div>
-          </div>
 
-          {/* Total Patients */}
-          <div className="group relative bg-gradient-to-br from-navy-900 to-navy-950 rounded-lg p-4 border border-navy-800/30 hover:border-indigo-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative">
-              <div className="flex justify-between items-start mb-2">
-                <Users className="h-5 w-5 text-indigo-400" />
-                <span className="text-2xl font-bold text-white">{mockPatients.length}</span>
+            {/* Recent Queries */}
+            <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl p-6 border border-gray-700/50">
+              <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
+                <MessageSquare className="w-5 h-5 text-green-400 mr-2" />
+                Recent Patient Queries
+              </h2>
+              <div className="space-y-4">
+                {mockQueries.map((query) => (
+                  <div
+                    key={query.id}
+                    className="bg-gray-900/50 p-4 rounded-lg border border-gray-700/30 hover:border-green-500/30 transition-all"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="font-medium text-white">{query.patient}</h3>
+                      <span className="text-xs text-gray-400">{query.time}</span>
+                    </div>
+                    <p className="text-sm text-gray-300">{query.question}</p>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-sm font-medium text-gray-400">Patients</h3>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );

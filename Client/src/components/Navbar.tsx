@@ -15,11 +15,22 @@ const Navbar = () => {
     ["rgba(0, 0, 0, 0.3)", "rgba(0, 0, 0, 0.8)"]
   );
 
-  // Check authentication status when component mounts
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token); // If token exists, user is authenticated
-  }, []);
+  // const [springs, api] = useSpring(() => ({
+  //   from: { transform: "perspective(1000px) rotateX(0deg)" },
+  // }));
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const rotation =
+  //       window.scrollY > 50
+  //         ? "perspective(1000px) rotateX(-2deg)"
+  //         : "perspective(1000px) rotateX(0deg)";
+  //     api.start({ transform: rotation });
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [api]);
 
   const handleAuthClick = () => {
     setIsAuthModalOpen(true);
@@ -58,42 +69,37 @@ const Navbar = () => {
                   "Services",
                   "Feedbacks",
                   "About Us",
-                ].map((item) => (
-                  <motion.a
-                    key={item}
-                    onClick={() =>
-                      document
-                        .getElementById(item)
-                        ?.scrollIntoView({ behavior: "smooth" })
-                    }
-                    whileHover={{ scale: 1.05 }}
-                    className="relative text-gray-300 hover:text-white px-3 py-2 rounded-md text-md font-medium cursor-pointer group"
-                  >
-                    {item}
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-teal-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-                  </motion.a>
-                ))}
-
-                {!isAuthenticated ? (
-                  <>
+                  "Login",
+                  "Sign Up",
+                  "Log Out",
+                ].map((item) =>
+                  item === "Login" ||
+                  item === "Log Out" ||
+                  item === "Sign Up" ? (
                     <motion.a
-                      onClick={handleAuthClick}
+                      key={item}
                       whileHover={{ scale: 1.05 }}
+                      onClick={handleAuthClick} // Opens the modal
                       className="relative text-blue-500 hover:text-blue-700 px-3 py-2 rounded-md text-md font-medium cursor-pointer group"
                     >
-                      Login
+                      {item}
                       <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-teal-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                     </motion.a>
-                  </>
-                ) : (
-                  <motion.a
-                    onClick={handleLogout}
-                    whileHover={{ scale: 1.05 }}
-                    className="relative text-red-500 hover:text-red-700 px-3 py-2 rounded-md text-md font-medium cursor-pointer group"
-                  >
-                    Log Out
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-red-400 to-orange-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-                  </motion.a>
+                  ) : (
+                    <motion.a
+                      key={item}
+                      onClick={() =>
+                        document
+                          .getElementById(item)
+                          ?.scrollIntoView({ behavior: "smooth" })
+                      }
+                      whileHover={{ scale: 1.05 }}
+                      className="relative text-gray-300 hover:text-white px-3 py-2 rounded-md text-md font-medium cursor-pointer group"
+                    >
+                      {item}
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-teal-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                    </motion.a>
+                  )
                 )}
               </button>
             </div>
@@ -118,11 +124,27 @@ const Navbar = () => {
             className="md:hidden"
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {["Home", "Appointment", "Services", "Feedbacks", "About Us"].map(
-                (item) => (
+              {[
+                "Home",
+                "Appointment",
+                "Services",
+                "Feedbacks",
+                "About Us",
+                "Login",
+                "Sign Up",
+                "Log Out",
+              ].map((item) =>
+                item === "Login" ? (
                   <a
                     key={item}
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleAuthClick} // Opens the modal
+                    className="text-blue-500 hover:text-blue-700 block px-3 py-2 rounded-md text-base font-extrabold"
+                  >
+                    {item}
+                  </a>
+                ) : (
+                  <a
+                    key={item}
                     className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                   >
                     {item}

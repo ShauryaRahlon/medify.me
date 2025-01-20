@@ -54,7 +54,7 @@ const Testimonials = () => {
   useEffect(() => {
     let animationFrameId: number | null = null;
     let lastTimestamp = 0;
-    const speed = 0.1;
+    const speed = 0.19;
 
     const animate = (timestamp: number) => {
       if (!isHovered && scrollRef.current && !isResetting) {
