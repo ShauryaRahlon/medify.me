@@ -145,7 +145,7 @@ function Review() {
           <div className="max-w-2xl mx-auto">
             <header className="text-center mb-12 flex flex-col justify-center items-center">
               <h1 className="text-4xl font-bold text-white inline-block">
-                Review Buddy
+              prescription Analayzer
               </h1>
             </header>
             <Chatbot />
