@@ -13,22 +13,21 @@ function generateOTP() {
 }
 
 // Signup Controller
+let tempUsers = new Map();  // Temporary storage for user data
+
 export const signup = async (req, res) => {
     try {
         const { userName, email, password } = req.body;
 
-        // Validate input fields
         if (!userName || !email || !password) {
             return res.status(400).json({ error: "All fields are required" });
         }
 
-        // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({ error: "Invalid email format" });
         }
 
-        // Check if user already exists
         const checkUser = await User.findOne({ email });
         if (checkUser) {
             return res.status(400).json({ error: "User with same email already exists" });
@@ -37,7 +36,7 @@ export const signup = async (req, res) => {
         // Generate OTP
         const otp = generateOTP();
 
-        // Configure email transport
+        // Send OTP email
         const transporter = nodemailer.createTransport({
             service: "Gmail",
             auth: {
@@ -46,50 +45,36 @@ export const signup = async (req, res) => {
             },
         });
 
-        // Send OTP email
         console.log(otp);
         try {
             await transporter.sendMail({
-                from: "medify.ai.me@gmail.com",
+                from: process.env.EMAIL_USER,
                 to: email,
                 subject: "Your OTP for Signup",
-                text: `Your OTP for signup is ${otp}.`,
-                html: `
-                    <h2>Welcome!</h2>
-                    <p>Your OTP for signup is: <strong>${otp}</strong></p>
-                    <p>If you didn't request this OTP, please ignore this email.</p>
-                `,
+                html: `<h2>Welcome!</h2>
+                       <p>Your OTP for signup is: <strong>${otp}</strong></p>
+                       <p>If you didn't request this OTP, please ignore this email.</p>`,
             });
         } catch (error) {
-            console.log(error, "error in sending OTP");
+            console.error("Error in sending OTP:", error);
             return res.status(500).json({ error: "Failed to send OTP email" });
         }
 
-        // Hash password
+        // Hash the password before storing it temporarily
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Create user
-        const newUser = new User({
-            userName,
-            email,
-            password: hashedPassword,
-            otp,
-            isVerified: false,
-        });
+        // Store user details in memory
+        tempUsers.set(email, { userName, email, password: hashedPassword, otp });
 
-        await newUser.save();
-
-        return res.status(201).json({
-            message: "User created successfully. Please verify your email with the OTP.",
-            userId: newUser._id,
-            email: newUser.email,
+        return res.status(200).json({
+            message: "OTP sent to your email. Please verify to complete signup.",
         });
     } catch (error) {
         console.error("Error in signup:", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
-}
+};
 
 // OTP Verification Controller
 export const verifyOTP = async (req, res) => {
@@ -100,30 +85,36 @@ export const verifyOTP = async (req, res) => {
             return res.status(400).json({ error: "Email and OTP are required" });
         }
 
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
+        // Check if email exists in temporary storage
+        const tempUser = tempUsers.get(email);
+        if (!tempUser) {
+            return res.status(404).json({ error: "User not found or OTP expired" });
         }
 
-        if (user.isVerified) {
-            return res.status(400).json({ error: "User is already verified" });
-        }
-
-        if (user.otp !== otp) {
+        if (tempUser.otp !== parseInt(otp)) {
             return res.status(400).json({ error: "Invalid OTP" });
         }
 
-        user.isVerified = true;
-        user.otp = undefined;
-        await user.save();
+        // Create user after successful verification
+        const newUser = new User({
+            userName: tempUser.userName,
+            email: tempUser.email,
+            password: tempUser.password,
+            isVerified: true,
+        });
 
-        return res.status(200).json({ message: "Email verified successfully" });
+        await newUser.save();
+
+        // Remove the user from temporary storage
+        tempUsers.delete(email);
+
+        return res.status(200).json({ message: "Email verified successfully, user created!" });
     } catch (error) {
         console.error("Error in verifyOTP:", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
 
 // Login Controller
 export const login = async (req, res) => {
@@ -156,5 +147,3 @@ export const login = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
-
-
