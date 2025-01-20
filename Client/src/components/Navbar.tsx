@@ -84,7 +84,7 @@ const Navbar = () => {
             {/* Desktop Menu */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
-                {["Home", "Appointment", "Services", "Feedbacks", "About Us"]
+                {["Home", "Services", "Feedbacks", "About Us"]
                   .concat(isAuthenticated ? ["Log Out"] : ["Login"])
                   .map((item) => (
                     <motion.a
@@ -135,7 +135,7 @@ const Navbar = () => {
             className="md:hidden"
           >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {["Home", "Appointment", "Services", "Feedbacks", "About Us"]
+              {["Home", "Services", "Feedbacks", "About Us"]
                 .concat(isAuthenticated ? ["Log Out"] : ["Login"])
                 .map((item) => (
                   <a
