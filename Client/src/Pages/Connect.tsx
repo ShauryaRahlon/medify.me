@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 
-const socket: Socket = io("https://docmed-server.onrender.com");
+const socket: Socket = io("https://medify-me-1.onrender.com");
 
 function Connect() {
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
