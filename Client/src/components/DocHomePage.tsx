@@ -73,7 +73,11 @@ function DocHomePage() {
       onClick={() => setSidebarOpen(false)}
     />
   );
-
+  const handleLogOutClick = () => {
+    localStorage.removeItem("token"); // If you're using token-based authentication
+    localStorage.removeItem("user");
+    navigate("/");
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100">
       <Overlay />
@@ -181,7 +185,9 @@ function DocHomePage() {
                     <User className="w-4 h-4 mr-2" />
                     Profile
                   </button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-red-400">
+                  <button
+                   onClick={handleLogOutClick}
+                   className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-red-400">
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
                   </button>
