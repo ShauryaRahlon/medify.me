@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Menu,
   X,
@@ -25,6 +26,21 @@ function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isProfileOpen, setProfileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState('Dashboard');
+  const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
+  // Handle responsive sidebar
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth < 768) {
+        setSidebarOpen(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const sidebarItems = [
     { icon: <Home className="sidebar-icon" />, label: 'Dashboard', category: 'main' },
@@ -40,50 +56,73 @@ function App() {
   const features = [
     {
       title: 'Connect to Doctor',
-      icon: <Stethoscope className="w-12 h-12 text-blue-500" />,
+      icon: <Stethoscope className="w-8 h-8 md:w-12 md:h-12 text-blue-400" />,
       description: 'Get instant consultation with certified doctors',
-      bgGradient: 'from-blue-100 to-blue-200'
+      bgGradient: 'from-gray-800 to-gray-700'
     },
     {
       title: 'Symptoms Detector',
-      icon: <Brain className="w-12 h-12 text-purple-500" />,
+      icon: <Brain className="w-8 h-8 md:w-12 md:h-12 text-purple-400" />,
       description: 'Check your symptoms and get instant analysis',
-      bgGradient: 'from-purple-100 to-purple-200'
+      bgGradient: 'from-gray-800 to-gray-700',
+      path: '/symptoms',
     },
     {
       title: 'Food Nutrition Checker',
-      icon: <Apple className="w-12 h-12 text-green-500" />,
+      icon: <Apple className="w-8 h-8 md:w-12 md:h-12 text-green-400" />,
       description: 'Analyze nutritional value of your meals',
-      bgGradient: 'from-green-100 to-green-200'
+      bgGradient: 'from-gray-800 to-gray-700',
+      path: '/nutri'
     },
     {
       title: 'Prescription Check',
-      icon: <Pill className="w-12 h-12 text-red-500" />,
+      icon: <Pill className="w-8 h-8 md:w-12 md:h-12 text-red-400" />,
       description: 'Verify and manage your prescriptions',
-      bgGradient: 'from-red-100 to-red-200'
+      bgGradient: 'from-gray-800 to-gray-700',
+      path:'/review'
     }
   ];
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 animate-gradient">
-      {/* Enhanced Sidebar */}
-      <div className={`sidebar ${isSidebarOpen ? 'w-72' : 'w-20'}`}>
-        <div className="logo-section flex items-center justify-between">
-          <div className={`flex items-center space-x-3 ${!isSidebarOpen && 'hidden'}`}>
-            <Activity className="w-8 h-8 text-blue-600" />
-            <h1 className="font-bold text-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
-              HealthCare
-            </h1>
-          </div>
-          <button
-            onClick={() => setSidebarOpen(!isSidebarOpen)}
-            className="p-2 rounded-lg hover:bg-white/50 transition-colors"
-          >
-            {isSidebarOpen ? <X className="text-gray-600" /> : <Menu className="text-gray-600" />}
-          </button>
-        </div>
+  // Mobile overlay for sidebar
+  const Overlay = () => (
+    <div 
+      className={`fixed inset-0 bg-black/50 z-10 transition-opacity ${isSidebarOpen && isMobile ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      onClick={() => setSidebarOpen(false)}
+    />
+  );
 
-        <div className="nav-section px-4">
+  const handleFeatureClick = (path) => {
+    navigate(path);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100">
+      <Overlay />
+      {/* Sidebar */}
+      <div 
+        className={`fixed top-0 left-0 h-full transition-all duration-300 z-20 bg-gray-900/90 backdrop-blur-lg border-r border-gray-700/50
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          ${isSidebarOpen ? 'w-72' : 'w-fit'}
+          ${isMobile ? 'w-72' : ''}`}
+      >
+        <div className="p-4 md:p-6 border-b border-gray-700/50">
+          <div className="flex items-center justify-between">
+            <div className={`flex items-center space-x-3 ${!isSidebarOpen && !isMobile && 'hidden'}`}>
+              <img src="./icons.webp" alt="Logo Image" className="w-8 h-8 md:w-10 md:h-10" />
+              <h1 className="font-bold text-lg md:text-xl text-blue-400 neon-glow">
+                medify.me
+              </h1>
+            </div>
+            <button
+              onClick={() => setSidebarOpen(!isSidebarOpen)}
+              className="p-2 rounded-lg hover:bg-gray-700/50 transition-colors text-gray-300"
+            >
+              {isSidebarOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+        </div>
+     
+        <div className="px-2 md:px-4 mt-4 md:mt-6">
           {Object.entries(
             sidebarItems.reduce((acc, item) => {
               if (!acc[item.category]) acc[item.category] = [];
@@ -91,29 +130,31 @@ function App() {
               return acc;
             }, {})
           ).map(([category, items]) => (
-            <div key={category} className="mb-8">
-              {isSidebarOpen && (
-                <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-2">
+            <div key={category} className="mb-6 md:mb-8">
+              {(isSidebarOpen || isMobile) && (
+                <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 md:mb-4 px-2">
                   {category}
                 </h2>
               )}
               {(items as typeof sidebarItems).map((item, index) => (
                 <button
                   key={index}
-                  onClick={() => setActiveItem(item.label)}
-                  className={`sidebar-item group ${activeItem === item.label ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveItem(item.label);
+                    if (isMobile) setSidebarOpen(false);
+                  }}
+                  className={`w-full px-4 md:px-6 py-3 md:py-4 text-left transition-all duration-300 flex items-center rounded-lg mb-1
+                    ${activeItem === item.label ? 'bg-blue-500/20 text-blue-400' : 'text-gray-300 hover:bg-gray-700/30'}`}
                 >
                   <div className="flex items-center w-full">
-                    <div className={`${activeItem === item.label ? 'text-white' : 'text-gray-600'}`}>
-                      {item.icon}
-                    </div>
-                    {isSidebarOpen && (
+                    <div className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-center">{item.icon}</div>
+                    {(isSidebarOpen || isMobile) && (
                       <>
-                        <span className="ml-4 font-medium">{item.label}</span>
+                        <span className="ml-3 md:ml-4 font-medium text-sm md:text-base">{item.label}</span>
                         <ChevronRight 
                           className={`ml-auto w-4 h-4 transition-transform duration-200 
-                            ${activeItem === item.label ? 'text-white opacity-100' : 'opacity-0 group-hover:opacity-50'}
-                            ${activeItem === item.label ? 'translate-x-0' : '-translate-x-2 group-hover:translate-x-0'}`}
+                            ${activeItem === item.label ? 'opacity-100' : 'opacity-0'}
+                            ${activeItem === item.label ? 'translate-x-0' : '-translate-x-2'}`}
                         />
                       </>
                     )}
@@ -126,37 +167,42 @@ function App() {
       </div>
 
       {/* Main Content */}
-      <div className={`transition-all duration-300 ${isSidebarOpen ? 'ml-72' : 'ml-20'}`}>
-        {/* Rest of the content remains the same */}
-        <header className="glass-effect shadow-lg p-4 sticky top-0 z-10">
-          <div className="flex justify-between items-center max-w-7xl mx-auto">
-            <div className="flex items-center space-x-4">
-              <Activity className="w-6 h-6 text-blue-500 animate-float" />
-              <span className="text-lg font-semibold text-gray-700">Health Dashboard</span>
+      <div className={`transition-all duration-300 ${isSidebarOpen && !isMobile ? 'ml-72' : 'ml-0 md:ml-20'}`}>
+        <header className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-lg border-b border-gray-700/50">
+          <div className="flex justify-between items-center p-4">
+            <div className="flex items-center">
+              {isMobile && (
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="p-2 mr-2 rounded-lg hover:bg-gray-700/50 transition-colors text-gray-300"
+                >
+                  <Menu className="w-6 h-6" />
+                </button>
+              )}
+              <span className="text-base md:text-lg font-semibold text-gray-100 ml-5">Health Dashboard</span>
             </div>
             <div className="relative">
               <button
                 onClick={() => setProfileOpen(!isProfileOpen)}
-                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-white/50 transition-all"
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700/50 transition-all"
               >
                 <img
                   src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3"
                   alt="Profile"
-                  className="w-10 h-10 rounded-full ring-2 ring-white shadow-lg"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-full ring-2 ring-gray-700"
                 />
-                <div className={`transition-all ${!isSidebarOpen && 'hidden'}`}>
-                  <p className="text-sm font-medium text-gray-700">John Doe</p>
-                  <p className="text-xs text-gray-500">Premium Member</p>
+                <div className="hidden md:block">
+                  <p className="text-sm font-medium text-gray-100">John Doe</p>
                 </div>
               </button>
 
               {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-48 glass-effect rounded-xl shadow-xl py-2 z-10">
-                  <button className="w-full text-left px-4 py-2 hover:bg-white/50 transition-colors flex items-center">
+                <div className="absolute right-0 mt-2 w-48 bg-gray-800/90 backdrop-blur-lg rounded-xl shadow-xl py-2 z-10 border border-gray-700/50">
+                  <button className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-gray-300">
                     <User className="w-4 h-4 mr-2" />
                     Profile
                   </button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-white/50 transition-colors flex items-center text-red-500">
+                  <button className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-red-400">
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
                   </button>
@@ -166,32 +212,33 @@ function App() {
           </div>
         </header>
 
-        <main className="p-4 md:p-8 max-w-7xl mx-auto">
-          <div className="glass-effect rounded-2xl p-8 mb-8 transform hover:scale-[1.02] transition-all">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text mb-4">
+        <main className="p-4 md:p-8">
+          <div className="bg-gray-800/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-8 mb-6 md:mb-8 border border-gray-700/50 transform hover:scale-[1.01] transition-all">
+            <h1 className="text-2xl md:text-4xl font-bold text-blue-400 neon-glow mb-2 md:mb-4">
               Welcome Back, John!
             </h1>
-            <p className="text-gray-600">Your health journey continues. Here's your daily overview.</p>
+            <p className="text-sm md:text-base text-gray-300">Your health journey continues. Here's your daily overview.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="feature-card group cursor-pointer"
+                className="group cursor-pointer"
+                onClick={() => handleFeatureClick(feature.path)}
               >
-                <div className={`card-content h-full bg-gradient-to-br ${feature.bgGradient} p-6 rounded-2xl shadow-lg 
-                  transition-all duration-300 hover:shadow-2xl`}
+                <div className={`h-full bg-gradient-to-br ${feature.bgGradient} p-4 md:p-6 rounded-xl md:rounded-2xl border border-gray-700/50 
+                  transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10`}
                 >
-                  <div className="flex items-start space-x-4">
-                    <div className="p-3 bg-white rounded-xl shadow-md transform transition-transform group-hover:scale-110">
+                  <div className="flex items-start space-x-3 md:space-x-4">
+                    <div className="p-2 md:p-3 bg-gray-900/50 rounded-lg md:rounded-xl shadow-md transform transition-transform group-hover:scale-110">
                       {feature.icon}
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      <h3 className="text-lg md:text-xl font-semibold text-gray-100 mb-1 md:mb-2">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600">{feature.description}</p>
+                      <p className="text-sm md:text-base text-gray-300">{feature.description}</p>
                     </div>
                   </div>
                 </div>
@@ -199,27 +246,27 @@ function App() {
             ))}
           </div>
 
-          <div className="mt-8 glass-effect rounded-2xl p-6 transform hover:scale-[1.01] transition-all">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
-              <Heart className="w-6 h-6 text-red-500 mr-2 animate-float" />
+          <div className="mt-6 md:mt-8 bg-gray-800/50 backdrop-blur-lg rounded-xl md:rounded-2xl p-4 md:p-6 border border-gray-700/50 transform hover:scale-[1.01] transition-all">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-100 mb-4 md:mb-6 flex items-center">
+              <Heart className="w-5 h-5 md:w-6 md:h-6 text-red-400 mr-2 animate-float" />
               Your Health Overview
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {[
-                { label: 'Appointments', value: '3 Upcoming', icon: <Calendar className="w-6 h-6 text-blue-500" /> },
-                { label: 'Prescriptions', value: '2 Active', icon: <Pill className="w-6 h-6 text-green-500" /> },
-                { label: 'Health Score', value: '85/100', icon: <Activity className="w-6 h-6 text-purple-500" /> }
+                { label: 'Appointments', value: '3 Upcoming', icon: <Calendar className="w-5 h-5 md:w-6 md:h-6 text-blue-400" /> },
+                { label: 'Prescriptions', value: '2 Active', icon: <Pill className="w-5 h-5 md:w-6 md:h-6 text-green-400" /> },
+                { label: 'Health Score', value: '85/100', icon: <Activity className="w-5 h-5 md:w-6 md:h-6 text-purple-400" /> }
               ].map((stat, index) => (
                 <div 
                   key={index} 
-                  className="bg-gradient-to-br from-white/50 to-white/30 rounded-xl p-4 shadow-lg
-                    transform transition-all hover:scale-105 hover:shadow-xl"
+                  className="bg-gray-900/50 rounded-lg md:rounded-xl p-3 md:p-4 border border-gray-700/50
+                    transform transition-all hover:scale-105 hover:shadow-xl hover:shadow-blue-500/10"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-gray-600">{stat.label}</p>
+                    <p className="text-sm md:text-base text-gray-300">{stat.label}</p>
                     {stat.icon}
                   </div>
-                  <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+                  <p className="text-xl md:text-2xl font-bold text-blue-400 neon-glow">
                     {stat.value}
                   </p>
                 </div>

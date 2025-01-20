@@ -31,7 +31,7 @@ const SignUpPage: React.FC = () => {
     console.log('Form Data:', formData);
 
     // Redirect to Medical History page
-    navigate('/medical-history');
+    navigate('/userhome');
   };
 
   return (
