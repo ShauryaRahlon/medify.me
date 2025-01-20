@@ -8,7 +8,7 @@ const Hero = () => {
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("token");
 
     if (token) {
       setLoading(true);

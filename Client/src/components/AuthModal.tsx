@@ -63,7 +63,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
         body: JSON.stringify(formData),
       });
 
-      const token = localStorage.getItem("authToken");
+      // const token = localStorage.getItem("authToken");
 
       if (!response.ok) {
         throw new Error("Invalid email or password");
