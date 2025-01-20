@@ -17,7 +17,7 @@ const SignUpPage: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setError(null); // Clear the error on user input
+    setError(null); //
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

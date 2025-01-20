@@ -8,10 +8,17 @@ const Hero = () => {
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
-    setLoading(true);
-    setTimeout(() => {
-      navigate("/userhome");
-    }, 2000);
+    const token = localStorage.getItem("authToken");
+
+    if (token) {
+      setLoading(true);
+      setTimeout(() => {
+        navigate("/userhome");
+      }, 2000);
+    } else {
+      console.log(token);
+      alert("Please log in to continue.");
+    }
   };
 
   return (
@@ -69,7 +76,7 @@ const Hero = () => {
                 >
                   <div className="flex flex-col items-center gap-4">
                     <motion.div
-                      animate={{ 
+                      animate={{
                         rotate: 360,
                         scale: [1, 1.2, 1],
                       }}
@@ -83,7 +90,7 @@ const Hero = () => {
                           duration: 1,
                           repeat: Infinity,
                           ease: "easeInOut",
-                        }
+                        },
                       }}
                       className="relative"
                     >
