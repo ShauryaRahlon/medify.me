@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Lock, Unlock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Lock, Unlock } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Otpverify = () => {
   const [isVerified, setIsVerified] = useState(false);
@@ -19,11 +19,11 @@ const Otpverify = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsVerified(true);
-    navigate('/userhome');
+    navigate("/userhome");
   };
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   return (
@@ -38,22 +38,22 @@ const Otpverify = () => {
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${2 + Math.random() * 3}s`
+              animationDuration: `${2 + Math.random() * 3}s`,
             }}
           />
         ))}
       </div>
-      
+
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-green-500/5" />
 
       {/* Form */}
-      <form 
+      <form
         onSubmit={handleSubmit}
         className="relative w-[320px] h-[420px] flex flex-col items-center bg-gray-900/40 backdrop-blur-sm rounded-lg shadow-2xl p-6 border border-gray-700/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-blue-500/10 hover:border-blue-500/30 z-10"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-green-500/5 rounded-lg" />
-        
+
         <p className="relative text-2xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent mt-4">
           Verify OTP
         </p>
@@ -92,13 +92,17 @@ const Otpverify = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </button>
 
-        <button
-          className="relative mt-4 w-full py-2.5 bg-gray-800/30 text-gray-300 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-700/40 active:scale-[0.98] transition-all duration-300 font-medium backdrop-blur-sm"
-          type="button"
-          onClick={handleBack}
+        <Link
+          to={"/"}
+          className="relative mt-4 w-full py-2.5  text-gray-300 rounded-lg shadow-lg hover:shadow-xl  active:scale-[0.98] transition-all duration-300 font-medium backdrop-blur-sm"
         >
-          Back
-        </button>
+          <button
+            className="relative mt-4 w-full py-2.5 bg-gray-800/30 text-gray-300 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-700/40 active:scale-[0.98] transition-all duration-300 font-medium backdrop-blur-sm"
+            type="button"
+          >
+            Back
+          </button>
+        </Link>
       </form>
     </div>
   );

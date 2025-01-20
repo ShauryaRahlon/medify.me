@@ -43,7 +43,7 @@ const SignUpPage: React.FC = () => {
       // Handle success response
       console.log("Signup successful:", response.data);
       alert(response.data.message);
-      navigate("/verifyOTP");
+      navigate("/otp");
     } catch (err: any) {
       // Handle error response
       console.log("Error in verifyOTP");
