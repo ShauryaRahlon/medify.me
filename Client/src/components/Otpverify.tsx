@@ -37,7 +37,7 @@ const Otpverify = () => {
         throw new Error("Email not found. Please try signing up again.");
 
       const response = await axios.post(
-        "http://localhost:8000/api/auth/verifyOTP", //wrong route
+        "https://medify-me-1.onrender.com/api/auth/verifyOTP", //wrong route
         {
           email,
           otp: enteredOtp,

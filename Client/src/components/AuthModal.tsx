@@ -55,13 +55,16 @@ const AuthModal: React.FC<AuthModalProps> = ({
         throw new Error("Please enter a valid email address");
       }
 
-      const response = await fetch("http://localhost:8000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://medify-me-1.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       // const token = localStorage.getItem("authToken");
 

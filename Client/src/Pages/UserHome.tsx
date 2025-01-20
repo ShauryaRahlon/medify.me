@@ -91,6 +91,7 @@ function App() {
       icon: <Stethoscope className="w-8 h-8 md:w-12 md:h-12 text-blue-400" />,
       description: "Get instant consultation with certified doctors",
       bgGradient: "from-gray-800 to-gray-700",
+      path: "/connect",
     },
     {
       title: "Symptoms Detector",
