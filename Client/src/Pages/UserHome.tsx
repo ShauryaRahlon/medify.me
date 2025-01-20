@@ -22,13 +22,27 @@ import {
   BarChart,
 } from "lucide-react";
 
+// Add interfaces for type safety
+interface SidebarItem {
+  category: "other" | "main" | "health"; // Add all possible category strings
+  [key: string]: any; // Other properties of sidebar items
+}
+
+interface Feature {
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  bgGradient: string;
+  path: "/connect" | "/symptoms" | "/nutri" | "/review"; // Strictly typed paths
+}
+
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isProfileOpen, setProfileOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
-  // Handle responsive sidebar
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -42,7 +56,7 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const sidebarItems = [
+  const sidebarItems: SidebarItem[] = [
     {
       icon: <Home className="sidebar-icon" />,
       label: "Dashboard",
@@ -85,7 +99,7 @@ function App() {
     },
   ];
 
-  const features = [
+  const features: Feature[] = [
     {
       title: "Connect to Doctor",
       icon: <Stethoscope className="w-8 h-8 md:w-12 md:h-12 text-blue-400" />,
@@ -117,12 +131,11 @@ function App() {
   ];
 
   const handleLogOutClick = () => {
-    localStorage.removeItem("token"); // If you're using token-based authentication
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/");
   };
 
-  // Mobile overlay for sidebar
   const Overlay = () => (
     <div
       className={`fixed inset-0 bg-black/50 z-10 transition-opacity ${
@@ -134,10 +147,14 @@ function App() {
     />
   );
 
-  const handleFeatureClick = (path) => {
+  const handleFeatureClick = (path: Feature["path"]) => {
     navigate(path);
   };
+  type SidebarCategory = "other" | "main" | "health";
 
+  type SidebarAccumulator = {
+    [key in SidebarCategory]?: any[];
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100">
       <Overlay />
@@ -179,11 +196,14 @@ function App() {
 
         <div className="px-2 md:px-4 mt-4 md:mt-6">
           {Object.entries(
-            sidebarItems.reduce((acc, item) => {
-              if (!acc[item.category]) acc[item.category] = [];
-              acc[item.category].push(item);
+            sidebarItems.reduce((acc: SidebarAccumulator, item) => {
+              if (!acc[item.category]) {
+                // Initialize the category as an empty array if not defined
+                acc[item.category] = [];
+              }
+              acc[item.category]!.push(item); // Use non-null assertion since it's initialized
               return acc;
-            }, {})
+            }, {} as SidebarAccumulator) // Explicitly type the initial accumulator
           ).map(([category, items]) => (
             <div key={category} className="mb-6 md:mb-8">
               {(isSidebarOpen || isMobile) && (
@@ -199,11 +219,11 @@ function App() {
                     if (isMobile) setSidebarOpen(false);
                   }}
                   className={`w-full px-4 md:px-6 py-3 md:py-4 text-left transition-all duration-300 flex items-center rounded-lg mb-1
-                    ${
-                      activeItem === item.label
-                        ? "bg-blue-500/20 text-blue-400"
-                        : "text-gray-300 hover:bg-gray-700/30"
-                    }`}
+          ${
+            activeItem === item.label
+              ? "bg-blue-500/20 text-blue-400"
+              : "text-gray-300 hover:bg-gray-700/30"
+          }`}
                 >
                   <div className="flex items-center w-full">
                     <div className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-center">
@@ -216,16 +236,12 @@ function App() {
                         </span>
                         <ChevronRight
                           className={`ml-auto w-4 h-4 transition-transform duration-200 
-                            ${
-                              activeItem === item.label
-                                ? "opacity-100"
-                                : "opacity-0"
-                            }
-                            ${
-                              activeItem === item.label
-                                ? "translate-x-0"
-                                : "-translate-x-2"
-                            }`}
+                  ${activeItem === item.label ? "opacity-100" : "opacity-0"}
+                  ${
+                    activeItem === item.label
+                      ? "translate-x-0"
+                      : "-translate-x-2"
+                  }`}
                         />
                       </>
                     )}

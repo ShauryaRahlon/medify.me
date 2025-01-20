@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Review from "./Pages/Review";
+import { useState } from "react";
 import Home from "./Pages/Home";
 import SymptomAnalyzer from "./Pages/SymptomAnalyzer";
 import AuthModal from "./components/AuthModal";
@@ -11,6 +12,13 @@ import UserHome from "./Pages/UserHome";
 import Otpverify from "./components/Otpverify";
 import Connect from "./Pages/Connect";
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    window.history.back();
+  };
+
   return (
     <Router>
       <Routes>
@@ -20,7 +28,13 @@ function App() {
         <Route
           path="/signin"
           element={
-            <AuthModal isOpen={true} onClose={() => window.history.back()} />
+            <AuthModal
+              isOpen={isModalOpen}
+              onClose={handleClose}
+              onLoginSuccess={() => console.log("Login successful")} // Add this prop
+              setIsOpen={(isOpen) => setIsModalOpen(isOpen)} // Add this prop
+              setIsAuthModalOpen={(isOpen) => setIsModalOpen(isOpen)} // Add this prop
+            />
           }
         />
         <Route path="/connect" element={<Connect />} />
