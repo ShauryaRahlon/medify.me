@@ -15,8 +15,8 @@ const features = [
   },
   {
     icon: <Microscope className="w-8 h-8" />,
-    title: 'Lab Results',
-    description: 'Instant access to your medical test results',
+    title: 'Prescription Checker',
+    description: 'Instant access to your medical prescription query.',
   },
   {
     icon: <ScanSearch className="w-8 h-8" />,
