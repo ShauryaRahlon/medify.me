@@ -221,7 +221,8 @@ export default NutritionAnalyzer;
 // Simulated nutrition analysis API call
 async function simulateNutritionAnalysis(foodName: string, quantity: string) {
   // Enhanced nutritional values for Daal Chawal (example for 250gm serving)
-  const nutritionInfo = `
+  const nutritionDatabase: Record<string, string> = {
+    "dal chawal": `
 | **Nutrient**   | **Amount (per ${quantity})** |
 |-----------------|------------------------------|
 | **Calories**    | 250 kcal                    |
@@ -237,11 +238,139 @@ async function simulateNutritionAnalysis(foodName: string, quantity: string) {
 | **Sugar**       | 3 g                         |
 
 ### Additional Information
-- **Daal Chawal** is a nutritious meal typically made with lentils and rice.
+- **Dal Chawal** is a nutritious meal typically made with lentils and rice.
 - It is a great source of plant-based protein, dietary fiber, and essential vitamins and minerals.
 - Lentils provide slow-digesting carbohydrates, making this dish a good option for sustained energy levels.
 - Low in fats and free of cholesterol, making it heart-healthy.
-`;
+    `,
+    "pizza": `
+| **Nutrient**   | **Amount (per ${quantity})** |
+|-----------------|------------------------------|
+| **Calories**    | 285 kcal                    |
+| **Protein**     | 12 g                        |
+| **Carbohydrates** | 36 g                      |
+| **Fats**        | 10 g                        |
+| **Fiber**       | 2 g                         |
+| **Vitamins**    | Vitamin A, Vitamin C, B12   |
+| **Minerals**    | Calcium, Iron               |
+| **Sodium**      | 640 mg                      |
+| **Potassium**   | 200 mg                      |
+| **Cholesterol** | 18 mg                       |
+| **Sugar**       | 4 g                         |
 
-  return nutritionInfo;
+### Additional Information
+- **Pizza** is a popular dish made with dough, cheese, and various toppings.
+- It can be a rich source of calcium due to the cheese and provides carbohydrates for quick energy.
+- Moderation is key, as it can be high in sodium and saturated fats depending on the toppings.
+    `,
+    "burger": `
+| **Nutrient**   | **Amount (per ${quantity})** |
+|-----------------|------------------------------|
+| **Calories**    | 354 kcal                    |
+| **Protein**     | 17 g                        |
+| **Carbohydrates** | 29 g                      |
+| **Fats**        | 19 g                        |
+| **Fiber**       | 2 g                         |
+| **Vitamins**    | Vitamin B12, Vitamin D      |
+| **Minerals**    | Iron, Calcium, Zinc         |
+| **Sodium**      | 500 mg                      |
+| **Potassium**   | 300 mg                      |
+| **Cholesterol** | 40 mg                       |
+| **Sugar**       | 5 g                         |
+
+### Additional Information
+- **Burger** is a convenient and delicious meal, often featuring a patty, cheese, and vegetables between buns.
+- It is a good source of protein but can be high in fats and sodium.
+- Opt for whole-grain buns and lean meat to make it a healthier choice.
+    `,
+
+    "pasta": `
+| **Nutrient**   | **Amount (per ${quantity})** |
+|-----------------|------------------------------|
+| **Calories**    | 220 kcal                    |
+| **Protein**     | 8 g                         |
+| **Carbohydrates** | 40 g                      |
+| **Fats**        | 3 g                         |
+| **Fiber**       | 2 g                         |
+| **Vitamins**    | Vitamin B6, Vitamin K       |
+| **Minerals**    | Calcium, Iron               |
+| **Sodium**      | 15 mg                       |
+| **Potassium**   | 120 mg                      |
+| **Cholesterol** | 0 mg                        |
+| **Sugar**       | 2 g                         |
+
+### Additional Information
+- **Pasta** is a versatile dish made from durum wheat and can be combined with various sauces and proteins.
+- It is rich in carbohydrates and a good source of energy.
+- Opt for whole-grain pasta for added fiber and nutrients.
+    `,
+  "biryani": `
+| **Nutrient**   | **Amount (per ${quantity})** |
+|-----------------|------------------------------|
+| **Calories**    | 320 kcal                    |
+| **Protein**     | 15 g                        |
+| **Carbohydrates** | 45 g                      |
+| **Fats**        | 10 g                        |
+| **Fiber**       | 3 g                         |
+| **Vitamins**    | Vitamin A, Vitamin C        |
+| **Minerals**    | Calcium, Iron, Zinc         |
+| **Sodium**      | 500 mg                      |
+| **Potassium**   | 400 mg                      |
+| **Cholesterol** | 20 mg                       |
+| **Sugar**       | 3 g                         |
+
+### Additional Information
+- **Biryani** is a flavorful and aromatic rice dish prepared with spices, rice, and often meat or vegetables.
+- It provides a balanced mix of protein, carbohydrates, and fats.
+- Customizations like adding more vegetables can enhance its nutritional value.
+    `,
+  "idli sambar": `
+| **Nutrient**   | **Amount (per ${quantity})** |
+|-----------------|------------------------------|
+| **Calories**    | 180 kcal                    |
+| **Protein**     | 6 g                         |
+| **Carbohydrates** | 34 g                      |
+| **Fats**        | 3 g                         |
+| **Fiber**       | 4 g                         |
+| **Vitamins**    | Vitamin A, Vitamin C        |
+| **Minerals**    | Calcium, Iron               |
+| **Sodium**      | 150 mg                      |
+| **Potassium**   | 200 mg                      |
+| **Cholesterol** | 0 mg                        |
+| **Sugar**       | 2 g                         |
+
+### Additional Information
+- **Idli Sambar** is a traditional South Indian breakfast, low in calories and rich in protein and fiber.
+- It is a light and easily digestible meal, making it suitable for all age groups.
+    `,
+  };
+
+  const normalizedFoodName = foodName.trim().toLowerCase();
+
+  if (nutritionDatabase[normalizedFoodName]) {
+    return nutritionDatabase[normalizedFoodName];
+  } else {
+    return `
+| **Nutrient**   | **Amount (per ${quantity})** |
+|-----------------|------------------------------|
+| **Calories**    | Data not available          |
+| **Protein**     | Data not available          |
+| **Carbohydrates** | Data not available        |
+| **Fats**        | Data not available          |
+| **Fiber**       | Data not available          |
+| **Vitamins**    | Data not available          |
+| **Minerals**    | Data not available          |
+| **Sodium**      | Data not available          |
+| **Potassium**   | Data not available          |
+| **Cholesterol** | Data not available          |
+| **Sugar**       | Data not available          |
+
+### Additional Information
+- Sorry, we do not have nutritional data for **${foodName}** at the moment.
+- Please try another food item.
+    `;
+  }
 }
+
+//   return nutritionInfo;
+// }
