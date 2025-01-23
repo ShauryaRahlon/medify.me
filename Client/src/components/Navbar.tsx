@@ -30,8 +30,6 @@ const Navbar = () => {
     };
   }, []);
 
-  const { scrollY } = useScroll();
-
   const handleAuthClick = () => {
     setIsAuthModalOpen(true);
     setIsOpen(false);

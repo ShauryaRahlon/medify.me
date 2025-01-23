@@ -36,7 +36,7 @@ const SignUpPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://medify-me-1.onrender.com/api/auth/signup",
+        "https://medify-me-ahko.onrender.com/api/auth/signup",
         {
           userName: formData.name,
           email: formData.email,

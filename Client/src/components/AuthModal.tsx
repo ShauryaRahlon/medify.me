@@ -56,7 +56,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       }
 
       const response = await fetch(
-        "https://medify-me-1.onrender.com/api/auth/login",
+        "https://medify-me-ahko.onrender.com/api/auth/login",
         {
           method: "POST",
           headers: {
