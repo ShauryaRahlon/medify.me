@@ -199,7 +199,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 
 
-Project Link: [https://github.com/ShauryaRahlon/RedR](https://github.com/ShauryaRahlon/RedR)
+Project Link: [https://github.com/ShauryaRahlon/RedR](https://github.com/ShauryaRahlon/medify.me)
 
 ## 🙏 Acknowledgments
 
