@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import {
   Heart,
@@ -9,7 +8,6 @@ import {
   Twitter,
   Instagram,
   Linkedin,
-  ArrowRight,
   MessageCircle,
   BookOpen,
   Users,

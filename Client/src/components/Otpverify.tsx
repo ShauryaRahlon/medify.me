@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Lock, Unlock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,6 +20,10 @@ const Otpverify = () => {
       }
     }
   };
+  if (isVerified) {
+    toast.success("OTP verification successful!");
+    navigate("/userhome");
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

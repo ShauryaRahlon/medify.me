@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Menu,
   X,
   Stethoscope,
   Calendar,
   MessageSquare,
-  ClipboardList,
   Users,
   User,
   LogOut,
   Home,
   Settings,
-  Bell,
   HelpCircle,
-  Activity,
   ChevronRight,
   FileText,
   BarChart,
-  Clock
-} from 'lucide-react';
+  Clock,
+} from "lucide-react";
 
 function DocHomePage() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isProfileOpen, setProfileOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState('Dashboard');
+  const [activeItem, setActiveItem] = useState("Dashboard");
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
@@ -38,38 +35,113 @@ function DocHomePage() {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const sidebarItems = [
-    { icon: <Home className="sidebar-icon" />, label: 'Dashboard', category: 'main' },
-    { icon: <Calendar className="sidebar-icon" />, label: 'Appointments', category: 'main' },
-    { icon: <MessageSquare className="sidebar-icon" />, label: 'Messages', category: 'main' },
-    { icon: <Users className="sidebar-icon" />, label: 'Patients', category: 'clinical' },
-    { icon: <FileText className="sidebar-icon" />, label: 'Records', category: 'clinical' },
-    { icon: <BarChart className="sidebar-icon" />, label: 'Analytics', category: 'clinical' },
-    { icon: <Settings className="sidebar-icon" />, label: 'Settings', category: 'other' },
-    { icon: <HelpCircle className="sidebar-icon" />, label: 'Help', category: 'other' }
+    {
+      icon: <Home className="sidebar-icon" />,
+      label: "Dashboard",
+      category: "main",
+    },
+    {
+      icon: <Calendar className="sidebar-icon" />,
+      label: "Appointments",
+      category: "main",
+    },
+    {
+      icon: <MessageSquare className="sidebar-icon" />,
+      label: "Messages",
+      category: "main",
+    },
+    {
+      icon: <Users className="sidebar-icon" />,
+      label: "Patients",
+      category: "clinical",
+    },
+    {
+      icon: <FileText className="sidebar-icon" />,
+      label: "Records",
+      category: "clinical",
+    },
+    {
+      icon: <BarChart className="sidebar-icon" />,
+      label: "Analytics",
+      category: "clinical",
+    },
+    {
+      icon: <Settings className="sidebar-icon" />,
+      label: "Settings",
+      category: "other",
+    },
+    {
+      icon: <HelpCircle className="sidebar-icon" />,
+      label: "Help",
+      category: "other",
+    },
   ];
 
   const mockAppointments = [
-    { id: 1, patient: "John Doe", time: "10:00 AM", notes: "Regular checkup", status: "Upcoming" },
-    { id: 2, patient: "Sarah Smith", time: "11:30 AM", notes: "Follow-up", status: "Upcoming" },
-    { id: 3, patient: "Mike Johnson", time: "2:00 PM", notes: "Consultation", status: "Upcoming" },
-    { id: 4, patient: "Emma Wilson", time: "3:30 PM", notes: "Test results review", status: "Upcoming" },
+    {
+      id: 1,
+      patient: "John Doe",
+      time: "10:00 AM",
+      notes: "Regular checkup",
+      status: "Upcoming",
+    },
+    {
+      id: 2,
+      patient: "Sarah Smith",
+      time: "11:30 AM",
+      notes: "Follow-up",
+      status: "Upcoming",
+    },
+    {
+      id: 3,
+      patient: "Mike Johnson",
+      time: "2:00 PM",
+      notes: "Consultation",
+      status: "Upcoming",
+    },
+    {
+      id: 4,
+      patient: "Emma Wilson",
+      time: "3:30 PM",
+      notes: "Test results review",
+      status: "Upcoming",
+    },
   ];
 
   const mockQueries = [
-    { id: 1, patient: "Alice Brown", question: "Can I adjust my medication dosage?", time: "2 hours ago" },
-    { id: 2, patient: "Tom Davis", question: "When should I schedule my next visit?", time: "5 hours ago" },
-    { id: 3, patient: "Linda White", question: "Are these side effects normal?", time: "1 day ago" },
+    {
+      id: 1,
+      patient: "Alice Brown",
+      question: "Can I adjust my medication dosage?",
+      time: "2 hours ago",
+    },
+    {
+      id: 2,
+      patient: "Tom Davis",
+      question: "When should I schedule my next visit?",
+      time: "5 hours ago",
+    },
+    {
+      id: 3,
+      patient: "Linda White",
+      question: "Are these side effects normal?",
+      time: "1 day ago",
+    },
   ];
 
   // Mobile overlay for sidebar
   const Overlay = () => (
-    <div 
-      className={`fixed inset-0 bg-black/50 z-10 transition-opacity ${isSidebarOpen && isMobile ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+    <div
+      className={`fixed inset-0 bg-black/50 z-10 transition-opacity ${
+        isSidebarOpen && isMobile
+          ? "opacity-100"
+          : "opacity-0 pointer-events-none"
+      }`}
       onClick={() => setSidebarOpen(false)}
     />
   );
@@ -82,15 +154,23 @@ function DocHomePage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100">
       <Overlay />
       {/* Sidebar */}
-      <div 
+      <div
         className={`fixed top-0 left-0 h-full transition-all duration-300 z-20 bg-gray-900/90 backdrop-blur-lg border-r border-gray-700/50
-          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-          ${isSidebarOpen ? 'w-72' : 'w-fit'}
-          ${isMobile ? 'w-72' : ''}`}
+          ${
+            isSidebarOpen
+              ? "translate-x-0"
+              : "-translate-x-full md:translate-x-0"
+          }
+          ${isSidebarOpen ? "w-72" : "w-fit"}
+          ${isMobile ? "w-72" : ""}`}
       >
         <div className="p-4 md:p-6 border-b border-gray-700/50">
           <div className="flex items-center justify-between">
-            <div className={`flex items-center space-x-3 ${!isSidebarOpen && !isMobile && 'hidden'}`}>
+            <div
+              className={`flex items-center space-x-3 ${
+                !isSidebarOpen && !isMobile && "hidden"
+              }`}
+            >
               <Stethoscope className="w-8 h-8 md:w-10 md:h-10 text-blue-400" />
               <h1 className="font-bold text-lg md:text-xl text-blue-400 neon-glow">
                 DocPortal
@@ -107,7 +187,7 @@ function DocHomePage() {
 
         <div className="px-2 md:px-4 mt-4 md:mt-6">
           {Object.entries(
-            sidebarItems.reduce((acc, item) => {
+            sidebarItems.reduce((acc: Record<string, any[]>, item) => {
               if (!acc[item.category]) acc[item.category] = [];
               acc[item.category].push(item);
               return acc;
@@ -127,17 +207,33 @@ function DocHomePage() {
                     if (isMobile) setSidebarOpen(false);
                   }}
                   className={`w-full px-4 md:px-6 py-3 md:py-4 text-left transition-all duration-300 flex items-center rounded-lg mb-1
-                    ${activeItem === item.label ? 'bg-blue-500/20 text-blue-400' : 'text-gray-300 hover:bg-gray-700/30'}`}
+                    ${
+                      activeItem === item.label
+                        ? "bg-blue-500/20 text-blue-400"
+                        : "text-gray-300 hover:bg-gray-700/30"
+                    }`}
                 >
                   <div className="flex items-center w-full">
-                    <div className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-center">{item.icon}</div>
+                    <div className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-center">
+                      {item.icon}
+                    </div>
                     {(isSidebarOpen || isMobile) && (
                       <>
-                        <span className="ml-3 md:ml-4 font-medium text-sm md:text-base">{item.label}</span>
-                        <ChevronRight 
+                        <span className="ml-3 md:ml-4 font-medium text-sm md:text-base">
+                          {item.label}
+                        </span>
+                        <ChevronRight
                           className={`ml-auto w-4 h-4 transition-transform duration-200 
-                            ${activeItem === item.label ? 'opacity-100' : 'opacity-0'}
-                            ${activeItem === item.label ? 'translate-x-0' : '-translate-x-2'}`}
+                            ${
+                              activeItem === item.label
+                                ? "opacity-100"
+                                : "opacity-0"
+                            }
+                            ${
+                              activeItem === item.label
+                                ? "translate-x-0"
+                                : "-translate-x-2"
+                            }`}
                         />
                       </>
                     )}
@@ -150,7 +246,11 @@ function DocHomePage() {
       </div>
 
       {/* Main Content */}
-      <div className={`transition-all duration-300 ${isSidebarOpen && !isMobile ? 'ml-72' : 'ml-0 md:ml-20'}`}>
+      <div
+        className={`transition-all duration-300 ${
+          isSidebarOpen && !isMobile ? "ml-72" : "ml-0 md:ml-20"
+        }`}
+      >
         <header className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-lg border-b border-gray-700/50">
           <div className="flex justify-between items-center p-4">
             <div className="flex items-center">
@@ -162,7 +262,9 @@ function DocHomePage() {
                   <Menu className="w-6 h-6" />
                 </button>
               )}
-              <span className="text-base md:text-lg font-semibold text-gray-100 ml-5">Doctor Dashboard</span>
+              <span className="text-base md:text-lg font-semibold text-gray-100 ml-5">
+                Doctor Dashboard
+              </span>
             </div>
             <div className="relative">
               <button
@@ -175,7 +277,9 @@ function DocHomePage() {
                   className="w-8 h-8 md:w-10 md:h-10 rounded-full ring-2 ring-gray-700"
                 />
                 <div className="hidden md:block">
-                  <p className="text-sm font-medium text-gray-100">Dr. Sarah Johnson</p>
+                  <p className="text-sm font-medium text-gray-100">
+                    Dr. Sarah Johnson
+                  </p>
                 </div>
               </button>
 
@@ -186,8 +290,9 @@ function DocHomePage() {
                     Profile
                   </button>
                   <button
-                   onClick={handleLogOutClick}
-                   className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-red-400">
+                    onClick={handleLogOutClick}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-700/50 transition-colors flex items-center text-red-400"
+                  >
                     <LogOut className="w-4 h-4 mr-2" />
                     Logout
                   </button>
@@ -202,16 +307,34 @@ function DocHomePage() {
             <h1 className="text-2xl md:text-4xl font-bold text-blue-400 neon-glow mb-2 md:mb-4">
               Welcome, Dr. Sarah!
             </h1>
-            <p className="text-sm md:text-base text-gray-300">Here's your practice overview for today.</p>
+            <p className="text-sm md:text-base text-gray-300">
+              Here's your practice overview for today.
+            </p>
           </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             {[
-              { label: 'Appointments', value: mockAppointments.length, icon: <Calendar className="text-blue-400" /> },
-              { label: 'Patient Queries', value: mockQueries.length, icon: <MessageSquare className="text-green-400" /> },
-              { label: 'Total Patients', value: '120', icon: <Users className="text-purple-400" /> },
-              { label: 'Hours Today', value: '8.5', icon: <Clock className="text-orange-400" /> }
+              {
+                label: "Appointments",
+                value: mockAppointments.length,
+                icon: <Calendar className="text-blue-400" />,
+              },
+              {
+                label: "Patient Queries",
+                value: mockQueries.length,
+                icon: <MessageSquare className="text-green-400" />,
+              },
+              {
+                label: "Total Patients",
+                value: "120",
+                icon: <Users className="text-purple-400" />,
+              },
+              {
+                label: "Hours Today",
+                value: "8.5",
+                icon: <Clock className="text-orange-400" />,
+              },
             ].map((stat, index) => (
               <div
                 key={index}
@@ -219,11 +342,17 @@ function DocHomePage() {
               >
                 <div className="flex justify-between items-start mb-2">
                   <div className="p-2 bg-gray-900/50 rounded-lg">
-                    {React.cloneElement(stat.icon, { className: `w-5 h-5 md:w-6 md:h-6 ${stat.icon.props.className}` })}
+                    {React.cloneElement(stat.icon, {
+                      className: `w-5 h-5 md:w-6 md:h-6 ${stat.icon.props.className}`,
+                    })}
                   </div>
-                  <span className="text-2xl font-bold text-white">{stat.value}</span>
+                  <span className="text-2xl font-bold text-white">
+                    {stat.value}
+                  </span>
                 </div>
-                <h3 className="text-sm font-medium text-gray-400">{stat.label}</h3>
+                <h3 className="text-sm font-medium text-gray-400">
+                  {stat.label}
+                </h3>
               </div>
             ))}
           </div>
@@ -243,10 +372,16 @@ function DocHomePage() {
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-medium text-white">{appointment.patient}</h3>
-                        <p className="text-sm text-gray-400">{appointment.notes}</p>
+                        <h3 className="font-medium text-white">
+                          {appointment.patient}
+                        </h3>
+                        <p className="text-sm text-gray-400">
+                          {appointment.notes}
+                        </p>
                       </div>
-                      <span className="text-sm font-medium text-blue-400">{appointment.time}</span>
+                      <span className="text-sm font-medium text-blue-400">
+                        {appointment.time}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -266,8 +401,12 @@ function DocHomePage() {
                     className="bg-gray-900/50 p-4 rounded-lg border border-gray-700/30 hover:border-green-500/30 transition-all"
                   >
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-medium text-white">{query.patient}</h3>
-                      <span className="text-xs text-gray-400">{query.time}</span>
+                      <h3 className="font-medium text-white">
+                        {query.patient}
+                      </h3>
+                      <span className="text-xs text-gray-400">
+                        {query.time}
+                      </span>
                     </div>
                     <p className="text-sm text-gray-300">{query.question}</p>
                   </div>

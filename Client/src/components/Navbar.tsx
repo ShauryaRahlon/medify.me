@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import AuthModal from "./AuthModal";
 
@@ -31,11 +31,6 @@ const Navbar = () => {
   }, []);
 
   const { scrollY } = useScroll();
-  const backgroundColor = useTransform(
-    scrollY,
-    [0, 100],
-    ["rgba(0, 0, 0, 0.3)", "rgba(0, 0, 0, 0.8)"]
-  );
 
   const handleAuthClick = () => {
     setIsAuthModalOpen(true);

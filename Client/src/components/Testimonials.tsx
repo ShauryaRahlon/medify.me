@@ -1,28 +1,31 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Star, Quote } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
     name: "Sarah Johnson",
     role: "Fitness Enthusiast",
-    content: "This health tracking app has completely transformed my fitness journey. The real-time monitoring and AI insights are incredible!",
+    content:
+      "This health tracking app has completely transformed my fitness journey. The real-time monitoring and AI insights are incredible!",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/1.jpg"
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
   },
   {
     name: "Dr. Michael Chen",
     role: "Healthcare Professional",
-    content: "As a healthcare provider, I'm impressed by the accuracy and comprehensive nature of the health monitoring features.",
+    content:
+      "As a healthcare provider, I'm impressed by the accuracy and comprehensive nature of the health monitoring features.",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/men/2.jpg"
+    image: "https://randomuser.me/api/portraits/men/2.jpg",
   },
   {
     name: "Emma Williams",
     role: "Wellness Coach",
-    content: "The intuitive interface and detailed health insights make it easy for my clients to stay on track with their wellness goals.",
+    content:
+      "The intuitive interface and detailed health insights make it easy for my clients to stay on track with their wellness goals.",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/3.jpg"
-  }
+    image: "https://randomuser.me/api/portraits/women/3.jpg",
+  },
 ];
 
 const Testimonials = () => {
@@ -33,7 +36,13 @@ const Testimonials = () => {
   const [isResetting, setIsResetting] = useState(false);
 
   // Create array with 5 sets of testimonials for smoother looping
-  const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials, ...testimonials];
+  const extendedTestimonials = [
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+  ];
 
   useEffect(() => {
     const updateCardWidth = () => {
@@ -47,8 +56,8 @@ const Testimonials = () => {
     };
 
     updateCardWidth();
-    window.addEventListener('resize', updateCardWidth);
-    return () => window.removeEventListener('resize', updateCardWidth);
+    window.addEventListener("resize", updateCardWidth);
+    return () => window.removeEventListener("resize", updateCardWidth);
   }, []);
 
   useEffect(() => {
@@ -61,17 +70,15 @@ const Testimonials = () => {
         if (lastTimestamp) {
           const delta = timestamp - lastTimestamp;
           const newPosition = scrollPosition + speed * delta;
-          
-          // Get the width of one complete set of testimonials
-          const singleSetWidth = (cardWidth + 32) * testimonials.length; // Including gap
-          
-          // When we reach the end of the third set (middle)
+          const singleSetWidth = (cardWidth + 32) * testimonials.length;
+
           if (newPosition >= singleSetWidth * 3) {
-            // Reset to the position equivalent to the end of the first set
             setScrollPosition(singleSetWidth);
           } else {
             setScrollPosition(newPosition);
           }
+        } else if (isResetting) {
+          setIsResetting(false);
         }
         lastTimestamp = timestamp;
         animationFrameId = window.requestAnimationFrame(animate);
@@ -95,18 +102,19 @@ const Testimonials = () => {
   return (
     <div id="Feedbacks" className="py-12 sm:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-blue-500/10" />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-blue-500">
             What Our Users Say
           </h2>
           <p className="mt-4 text-lg text-gray-400">
-            Join thousands of satisfied users who've transformed their health journey
+            Join thousands of satisfied users who've transformed their health
+            journey
           </p>
         </div>
 
-        <div 
+        <div
           ref={scrollRef}
           className="overflow-hidden"
           onMouseEnter={() => setIsHovered(true)}
@@ -114,11 +122,11 @@ const Testimonials = () => {
           onTouchStart={() => setIsHovered(true)}
           onTouchEnd={() => setIsHovered(false)}
         >
-          <div 
+          <div
             className="flex gap-8 transition-transform duration-100"
-            style={{ 
+            style={{
               transform: `translateX(-${scrollPosition}px)`,
-              width: 'fit-content'
+              width: "fit-content",
             }}
           >
             {extendedTestimonials.map((testimonial, index) => (
@@ -135,13 +143,17 @@ const Testimonials = () => {
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-blue-500/50
                              shadow-lg group-hover:border-blue-400 transition-colors duration-200"
-                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    onError={(
+                      e: React.SyntheticEvent<HTMLImageElement, Event>
+                    ) => {
                       const target = e.target as HTMLImageElement;
                       target.src = "/api/placeholder/48/48";
                     }}
                   />
                   <div>
-                    <h3 className="text-lg font-semibold text-white">{testimonial.name}</h3>
+                    <h3 className="text-lg font-semibold text-white">
+                      {testimonial.name}
+                    </h3>
                     <p className="text-sm text-gray-400">{testimonial.role}</p>
                   </div>
                 </div>

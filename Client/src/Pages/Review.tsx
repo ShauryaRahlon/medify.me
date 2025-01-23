@@ -34,17 +34,17 @@ import { useState } from "react";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import ReactMarkdown from "react-markdown";
-import { Link,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import { Chatbot } from '../components/Chatbot';
-import { motion, useScroll, useTransform } from "framer-motion";
+import { Chatbot } from "../components/Chatbot";
+import { motion } from "framer-motion";
 
 function Review() {
   const [file, setFile] = useState<File | null>(null);
   const [caption, setCaption] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const onDrop = (acceptedFiles: File[]) => {
     setFile(acceptedFiles[0]);
     setCaption("");
@@ -132,9 +132,9 @@ function Review() {
     maxSize: 5 * 1024 * 1024, // 5MB
   });
 
-  const switchToUserHome=()=>{
-    navigate('/userhome');
-}
+  const switchToUserHome = () => {
+    navigate("/userhome");
+  };
 
   return (
     <div className="min-h-screen relative bg-black">
@@ -142,21 +142,25 @@ function Review() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#000000,transparent)]" />
       <div className="relative z-10">
         <div className="container mx-auto ">
-            <nav className="p-4 sm:p-6">
-                <motion.button
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  onClick={switchToUserHome}
-                  className="cursor-pointer flex items-center text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent gap-2 sm:gap-3"
-                >
-                  <img src="/icons.webp" alt="Logo" className="w-10 h-10 sm:w-14 sm:h-14" />
-                  <span>medify.me</span>
-                </motion.button>
-              </nav>
+          <nav className="p-4 sm:p-6">
+            <motion.button
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              onClick={switchToUserHome}
+              className="cursor-pointer flex items-center text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent gap-2 sm:gap-3"
+            >
+              <img
+                src="/icons.webp"
+                alt="Logo"
+                className="w-10 h-10 sm:w-14 sm:h-14"
+              />
+              <span>medify.me</span>
+            </motion.button>
+          </nav>
           <div className="max-w-2xl mx-auto">
             <header className="text-center mb-12 flex flex-col justify-center items-center">
               <h1 className="text-4xl font-bold text-white inline-block">
-              Prescription Analayzer
+                Prescription Analayzer
               </h1>
             </header>
             <Chatbot />

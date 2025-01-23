@@ -1,39 +1,38 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Activity, Brain, Microscope, ScanSearch } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Activity, Brain, Microscope, ScanSearch } from "lucide-react";
 
 const features = [
   {
     icon: <Activity className="w-8 h-8" />,
-    title: 'Health Monitoring',
-    description: 'Real-time tracking of vital signs and health metrics',
+    title: "Health Monitoring",
+    description: "Real-time tracking of vital signs and health metrics",
   },
   {
     icon: <Brain className="w-8 h-8" />,
-    title: 'Symptom Detector',
-    description: 'AI-powered analysis for accurate symptom detection',
+    title: "Symptom Detector",
+    description: "AI-powered analysis for accurate symptom detection",
   },
   {
     icon: <Microscope className="w-8 h-8" />,
-    title: 'Prescription Checker',
-    description: 'Instant access to your medical prescription query.',
+    title: "Prescription Checker",
+    description: "Instant access to your medical prescription query.",
   },
   {
     icon: <ScanSearch className="w-8 h-8" />,
-    title: 'Label Checker',
-    description: 'Scan and analyze nutrition labels instantly',
+    title: "Label Checker",
+    description: "Scan and analyze nutrition labels instantly",
   },
 ];
 
 const Features = () => {
   return (
-    <div id='Services' className="py-24 bg-black/50 relative overflow-hidden">
+    <div id="Services" className="py-24 bg-black/50 relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,100,255,0.15),transparent_70%)]"
       />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -62,9 +61,9 @@ const Features = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.01, easings: index * 0.1 }}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
-                boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)"
+                boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)",
               }}
               className="bg-gray-900/50 backdrop-blur-lg rounded-xl p-6 border border-white/10 group hover:border-blue-500/50 transition-all duration-300 cursor-pointer"
             >
